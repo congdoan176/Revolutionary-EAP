@@ -21,7 +21,7 @@ namespace Revolutionary.Models
         public AccountStatus Status { get; set; }
 
         public List<AccountRole> AccountRoles { get; set; }
-        public List<Mark> Mark { get; set; }
+        public List<Mark> Marks { get; set; }
         public List<AccountClazz> AccountClazzes { get; set; }
 
         public Account()
