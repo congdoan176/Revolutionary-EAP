@@ -9,6 +9,8 @@ namespace Revolutionary.Models
     {
         public float Value { get; set; }
         public MarkType Type { get; set; }
+        public Guid SubjectId { get; set; }
+        public Guid AccountId { get; set; }
         public DateTime CreatedAt { get; set; }        
         public Subject Subject { get; set; }        
         public Account Account { get; set; }

@@ -15,7 +15,7 @@ namespace Revolutionary.Models
         public DateTime EndAt { get; set; }
         public SubjectStatus Status { get; set; }
 
-        public List<Mark> Mark { get; set; }
+        public List<Mark> Marks { get; set; }
     }
 
     public enum SubjectStatus
