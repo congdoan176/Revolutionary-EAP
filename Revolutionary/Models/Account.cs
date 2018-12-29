@@ -22,7 +22,7 @@ namespace Revolutionary.Models
 
         public List<AccountRole> AccountRoles { get; set; }
         public List<Mark> Marks { get; set; }
-        public List<AccountClazz> AccountClazzes { get; set; }
+        public List<AccountClazz> AccountClazzs { get; set; }
 
         public Account()
         {
