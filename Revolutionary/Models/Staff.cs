@@ -7,7 +7,7 @@ namespace Revolutionary.Models
 {
     public class Staff
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public GenderType Gender { get; set; }

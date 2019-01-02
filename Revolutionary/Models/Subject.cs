@@ -9,7 +9,7 @@ namespace Revolutionary.Models
     public class Subject
     {
         [Key]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime EndAt { get; set; }

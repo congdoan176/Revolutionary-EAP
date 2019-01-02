@@ -9,7 +9,7 @@ namespace Revolutionary.Models
     public class Account
     {
         [Key]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -22,7 +22,7 @@ namespace Revolutionary.Models
 
         public List<AccountRole> AccountRoles { get; set; }
         public List<Mark> Marks { get; set; }
-        public List<AccountClazz> AccountClazzs { get; set; }
+        public List<AccountClazz> AccountClazzes { get; set; }
 
         public Account()
         {

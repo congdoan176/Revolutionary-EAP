@@ -26,7 +26,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Accounts/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
@@ -58,7 +58,6 @@ namespace Revolutionary.Controllers
         {
             if (ModelState.IsValid)
             {
-                account.Id = Guid.NewGuid();
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,7 +66,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Accounts/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -87,7 +86,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Email,Username,Password,ConfirmPassword,Salt,CreatedAt,UpdatedAt,DeletedAt,Status")] Account account)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Email,Username,Password,ConfirmPassword,Salt,CreatedAt,UpdatedAt,DeletedAt,Status")] Account account)
         {
             if (id != account.Id)
             {
@@ -118,7 +117,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Accounts/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
@@ -138,7 +137,7 @@ namespace Revolutionary.Controllers
         // POST: Accounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var account = await _context.Accounts.FindAsync(id);
             _context.Accounts.Remove(account);
@@ -146,7 +145,7 @@ namespace Revolutionary.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AccountExists(Guid id)
+        private bool AccountExists(long id)
         {
             return _context.Accounts.Any(e => e.Id == id);
         }

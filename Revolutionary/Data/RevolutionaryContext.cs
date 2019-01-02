@@ -11,7 +11,7 @@ namespace Revolutionary.Data
     {
         public DbSet<Revolutionary.Models.Account> Accounts { get; set; }
         public DbSet<Revolutionary.Models.AccountClazz> AccountClazzs { get; set; }
-        public DbSet<Revolutionary.Models.Clazz> Clazzs { get; set; }
+        public DbSet<Revolutionary.Models.Clazz> Clazzes { get; set; }
         public DbSet<Revolutionary.Models.AccountRole> AccountRoles { get; set; }
         public DbSet<Revolutionary.Models.Role> Roles { get; set; }
         public DbSet<Revolutionary.Models.Mark> Marks { get; set; }
@@ -31,5 +31,9 @@ namespace Revolutionary.Data
         }
 
         public DbSet<Revolutionary.Models.Teacher> Teacher { get; set; }
+
+        public DbSet<Revolutionary.Models.AccountInfomation> AccountInfomation { get; set; }
+
+        public DbSet<Revolutionary.Models.Staff> Staff { get; set; }
     }
 }

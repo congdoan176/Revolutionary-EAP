@@ -27,7 +27,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Marks/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
@@ -63,7 +63,6 @@ namespace Revolutionary.Controllers
         {
             if (ModelState.IsValid)
             {
-                mark.AccountId = Guid.NewGuid();
                 _context.Add(mark);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -74,7 +73,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Marks/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -96,7 +95,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Value,Type,SubjectId,AccountId,CreatedAt")] Mark mark)
+        public async Task<IActionResult> Edit(long id, [Bind("Value,Type,SubjectId,AccountId,CreatedAt")] Mark mark)
         {
             if (id != mark.AccountId)
             {
@@ -129,7 +128,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Marks/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
@@ -151,7 +150,7 @@ namespace Revolutionary.Controllers
         // POST: Marks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var mark = await _context.Marks.FindAsync(id);
             _context.Marks.Remove(mark);
@@ -159,7 +158,7 @@ namespace Revolutionary.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MarkExists(Guid id)
+        private bool MarkExists(long id)
         {
             return _context.Marks.Any(e => e.AccountId == id);
         }

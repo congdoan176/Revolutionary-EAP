@@ -26,7 +26,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Teachers/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
@@ -58,7 +58,6 @@ namespace Revolutionary.Controllers
         {
             if (ModelState.IsValid)
             {
-                teacher.Id = Guid.NewGuid();
                 _context.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,7 +66,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Teachers/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -87,7 +86,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status")] Teacher teacher)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Status")] Teacher teacher)
         {
             if (id != teacher.Id)
             {
@@ -118,7 +117,7 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Teachers/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
@@ -138,7 +137,7 @@ namespace Revolutionary.Controllers
         // POST: Teachers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var teacher = await _context.Teacher.FindAsync(id);
             _context.Teacher.Remove(teacher);
@@ -146,7 +145,7 @@ namespace Revolutionary.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TeacherExists(Guid id)
+        private bool TeacherExists(long id)
         {
             return _context.Teacher.Any(e => e.Id == id);
         }
