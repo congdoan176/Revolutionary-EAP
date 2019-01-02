@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="d0d3c96f-0d1d-4f48-92bd-500627b2e9ad"
-    Publisher="CN=admin"
+    Name="fc6c1d8f-2329-4965-9fa1-2af56a7d2ae2"
+    Publisher="CN=Do Not Open!"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="d0d3c96f-0d1d-4f48-92bd-500627b2e9ad" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="fc6c1d8f-2329-4965-9fa1-2af56a7d2ae2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>RevolutionaryEapApp</DisplayName>
-    <PublisherDisplayName>admin</PublisherDisplayName>
+    <PublisherDisplayName>Do Not Open!</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
