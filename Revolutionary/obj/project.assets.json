@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "Hashids.net/1.2.2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Hashids.net.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Hashids.net.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4619,6 +4631,19 @@
     }
   },
   "libraries": {
+    "Hashids.net/1.2.2": {
+      "sha512": "/NFNMwG9foXcvfvjVk9FEQ/8GD6TbziE9kuFhLjbqITvv+4WNCKlcSbvdoEckoIfBgdx0uVn2SJDmOgDOfh2pQ==",
+      "type": "package",
+      "path": "hashids.net/1.2.2",
+      "files": [
+        ".signature.p7s",
+        "hashids.net.1.2.2.nupkg.sha512",
+        "hashids.net.nuspec",
+        "lib/net40/Hashids.net.dll",
+        "lib/net45/Hashids.net.dll",
+        "lib/netstandard1.0/Hashids.net.dll"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "rMDlyePoxggkmN/qgha1+BR2Uy+dOr38xKCQOPfVNKGY07R2nYJGMTKJFE1XFgwD70RYUNazf2fqutjJF18XgQ==",
       "type": "package",
@@ -12213,6 +12238,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "Hashids.net >= 1.2.2",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.NETCore.App >= 2.1.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.1"
@@ -12259,6 +12285,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "Hashids.net": {
+            "target": "Package",
+            "version": "[1.2.2, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",

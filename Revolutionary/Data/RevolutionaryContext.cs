@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Revolutionary.Data
 {
@@ -16,6 +18,7 @@ namespace Revolutionary.Data
         public DbSet<Revolutionary.Models.Role> Roles { get; set; }
         public DbSet<Revolutionary.Models.Mark> Marks { get; set; }
         public DbSet<Revolutionary.Models.Subject> Subjects { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=RevolutionaryContext-9d9d6375-8ec6-4226-9205-e6eae8ee9a69;Trusted_Connection=True;MultipleActiveResultSets=true");

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Revolutionary.Data;
 using Revolutionary.Models;
+using HashidsNet;
+using Revolutionary.Helper;
 
 namespace Revolutionary.Controllers
 {
@@ -54,12 +56,20 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDay,Phone,Gender,Address")] AccountInfomation accountInfomation)
+        public async Task<IActionResult> Create([Bind("Id,Email,FirstName,LastName,BirthDay,Phone,Gender,Address")] AccountInfomation accountInfomation)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(accountInfomation);
-                await _context.SaveChangesAsync();
+                var hashId = new Hashids("FPTAptech");
+                Account newAccount = new Account()
+                {                    
+                    Salt = PasswordHandle.GetInstance().GenerateSalt(),                    
+                };
+                newAccount.Password = PasswordHandle.GetInstance().EncryptPassword("123456789", newAccount.Salt);
+                newAccount.Username = "Student" + String.Format("{0:X}", accountInfomation.Email.GetHashCode());                
+                _context.Add(newAccount);
+                await _context.SaveChangesAsync();                
                 return RedirectToAction(nameof(Index));
             }
             return View(accountInfomation);
@@ -86,7 +96,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,FirstName,LastName,BirthDay,Phone,Gender,Address")] AccountInfomation accountInfomation)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Email,FirstName,LastName,BirthDay,Phone,Gender,Address")] AccountInfomation accountInfomation)
         {
             if (id != accountInfomation.Id)
             {
@@ -149,5 +159,13 @@ namespace Revolutionary.Controllers
         {
             return _context.AccountInfomation.Any(e => e.Id == id);
         }
-    }
+
+        private string HashEmail(string email)
+        {
+            var hashId = new Hashids("FPTAptech");
+            return hashId.EncodeHex(email);
+        }
+    }   
+
+
 }

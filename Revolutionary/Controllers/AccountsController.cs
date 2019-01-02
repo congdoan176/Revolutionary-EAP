@@ -54,7 +54,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Username,Password,ConfirmPassword,Salt,CreatedAt,UpdatedAt,DeletedAt,Status")] Account account)
+        public async Task<IActionResult> Create([Bind("Id,Username,Password,Salt,CreatedAt,UpdatedAt,DeletedAt,Status")] Account account)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Email,Username,Password,ConfirmPassword,Salt,CreatedAt,UpdatedAt,DeletedAt,Status")] Account account)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Username,Password,Salt,CreatedAt,UpdatedAt,DeletedAt,Status")] Account account)
         {
             if (id != account.Id)
             {

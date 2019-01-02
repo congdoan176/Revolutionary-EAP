@@ -25,13 +25,9 @@ namespace Revolutionary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ConfirmPassword");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt");
-
-                    b.Property<string>("Email");
 
                     b.Property<string>("Password");
 
@@ -72,6 +68,8 @@ namespace Revolutionary.Migrations
                     b.Property<string>("Address");
 
                     b.Property<DateTime>("BirthDay");
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
 
