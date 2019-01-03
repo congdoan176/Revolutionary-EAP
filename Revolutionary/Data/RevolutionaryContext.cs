@@ -1,15 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Revolutionary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Revolutionary.Models;
 
 namespace Revolutionary.Data
 {
-    public class RevolutionaryContext:DbContext
+    public class RevolutionaryContext:IdentityDbContext<Account, Role, string, IdentityUserClaim<string>, AccountRole,
+    IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public DbSet<Revolutionary.Models.Account> Accounts { get; set; }
         public DbSet<Revolutionary.Models.AccountClazz> AccountClazzs { get; set; }
@@ -28,7 +25,6 @@ namespace Revolutionary.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AccountClazz>().HasKey(ac => new { ac.AccountId, ac.ClazzId });
-            modelBuilder.Entity<AccountRole>().HasKey(ar => new { ar.AccountId, ar.RoleId });
             modelBuilder.Entity<Mark>().HasKey(m => new { m.AccountId, m.SubjectId });
             base.OnModelCreating(modelBuilder);
         }
