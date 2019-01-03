@@ -7,8 +7,8 @@ namespace Revolutionary.Models
 {
     public class AccountClazz
     {
-        public Guid AccountId { get; set; }
-        public Guid ClazzId { get; set; }
+        public long AccountId { get; set; }
+        public long ClazzId { get; set; }
 
         public Account Account { get; set; }
         public Clazz Clazz { get; set; }

@@ -9,7 +9,7 @@ namespace Revolutionary.Models
     public class Clazz
     {
         [Key]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public ShiftType Shift { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -22,18 +22,18 @@ namespace Revolutionary.Controllers
         // GET: Clazzs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clazzs.ToListAsync());
+            return View(await _context.Clazzes.ToListAsync());
         }
 
         // GET: Clazzs/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var clazz = await _context.Clazzs
+            var clazz = await _context.Clazzes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (clazz == null)
             {
@@ -58,7 +58,6 @@ namespace Revolutionary.Controllers
         {
             if (ModelState.IsValid)
             {
-                clazz.Id = Guid.NewGuid();
                 _context.Add(clazz);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,14 +66,14 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Clazzs/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var clazz = await _context.Clazzs.FindAsync(id);
+            var clazz = await _context.Clazzes.FindAsync(id);
             if (clazz == null)
             {
                 return NotFound();
@@ -87,7 +86,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Shift,CreatedAt,UpdatedAt,DeletedAt,Status")] Clazz clazz)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Shift,CreatedAt,UpdatedAt,DeletedAt,Status")] Clazz clazz)
         {
             if (id != clazz.Id)
             {
@@ -118,14 +117,14 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Clazzs/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var clazz = await _context.Clazzs
+            var clazz = await _context.Clazzes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (clazz == null)
             {
@@ -138,17 +137,17 @@ namespace Revolutionary.Controllers
         // POST: Clazzs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var clazz = await _context.Clazzs.FindAsync(id);
-            _context.Clazzs.Remove(clazz);
+            var clazz = await _context.Clazzes.FindAsync(id);
+            _context.Clazzes.Remove(clazz);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClazzExists(Guid id)
+        private bool ClazzExists(long id)
         {
-            return _context.Clazzs.Any(e => e.Id == id);
+            return _context.Clazzes.Any(e => e.Id == id);
         }
     }
 }

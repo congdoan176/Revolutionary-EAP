@@ -7,7 +7,7 @@ namespace Revolutionary.Models
 {
     public class AccountRole
     {
-        public Guid AccountId { get; set; }
+        public long AccountId { get; set; }
         public int RoleId { get; set; }
 
 

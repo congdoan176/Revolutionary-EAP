@@ -7,7 +7,7 @@ namespace Revolutionary.Models
 {
     public class Teacher
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public TeacherStatus Status { get; set; }
         public List<Clazz> Clazzes { get; set; }
