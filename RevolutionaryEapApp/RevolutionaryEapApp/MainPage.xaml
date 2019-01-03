@@ -9,6 +9,24 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock FontWeight="Bold" FontSize="30" Text="Login Form" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 100, 0, 20"/>
+            <RelativePanel HorizontalAlignment="Center">
+                <TextBlock Text="Email" Margin="0, 0, 0,30"/>
+                <TextBox x:Name="Email" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Margin="0, 40, 0, 0"/>
+                <TextBlock RelativePanel.Below="Email" x:Name="error_UserName" Foreground="Red"/>
+                <TextBlock RelativePanel.Below="error_UserName" x:Name="email" Foreground="Red" Visibility="Collapsed"/>
+            </RelativePanel>
+            <RelativePanel HorizontalAlignment="Center" Margin="20">
+                <TextBlock Text="Password"  Margin="0, 0, 0,30"></TextBlock>
+                <TextBlock x:Name="error_Password" Foreground="Red" RelativePanel.Below="Password"></TextBlock>
+                <PasswordBox x:Name="Password" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" RenderTransformOrigin="0.488,-0.464" Margin="0, 40, 0, 0"/>
+                <TextBlock RelativePanel.Below="Password" x:Name="password" Foreground="Red" Visibility="Collapsed"/>
+            </RelativePanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Login_Button">
+                </Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
