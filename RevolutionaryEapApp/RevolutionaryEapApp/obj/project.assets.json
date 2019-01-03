@@ -27915,11 +27915,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Do Not Open!\\source\\repos\\RevolutionaryEapApp\\RevolutionaryEapApp\\RevolutionaryEapApp.csproj",
+      "projectUniqueName": "C:\\Users\\Do Not Open!\\Desktop\\RevolutionaryEapApp\\RevolutionaryEapApp\\RevolutionaryEapApp\\RevolutionaryEapApp.csproj",
       "projectName": "RevolutionaryEapApp",
-      "projectPath": "C:\\Users\\Do Not Open!\\source\\repos\\RevolutionaryEapApp\\RevolutionaryEapApp\\RevolutionaryEapApp.csproj",
+      "projectPath": "C:\\Users\\Do Not Open!\\Desktop\\RevolutionaryEapApp\\RevolutionaryEapApp\\RevolutionaryEapApp\\RevolutionaryEapApp.csproj",
       "packagesPath": "C:\\Users\\Do Not Open!\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Do Not Open!\\source\\repos\\RevolutionaryEapApp\\RevolutionaryEapApp\\obj\\",
+      "outputPath": "C:\\Users\\Do Not Open!\\Desktop\\RevolutionaryEapApp\\RevolutionaryEapApp\\RevolutionaryEapApp\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [

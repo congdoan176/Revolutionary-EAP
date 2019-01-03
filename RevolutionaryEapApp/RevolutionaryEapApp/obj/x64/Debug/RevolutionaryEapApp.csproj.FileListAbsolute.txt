@@ -1,0 +1,10 @@
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\RevolutionaryEapApp.csprojAssemblyReference.cache
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\App.g.i.cs
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\App.g.cs
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\App.xaml
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\HomePage.xaml
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\MainPage.xaml
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\App.xbf
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\HomePage.xbf
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\MainPage.xbf
+C:\Users\Do Not Open!\Desktop\RevolutionaryEapApp\RevolutionaryEapApp\RevolutionaryEapApp\obj\x64\Debug\XamlSaveStateFile.xml
