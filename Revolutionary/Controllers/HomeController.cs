@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Revolutionary.Models;
 
@@ -15,6 +17,7 @@ namespace Revolutionary.Controllers
             return View();
         }
 
+        [Authorize(Roles = "GiaoVu")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -22,6 +25,7 @@ namespace Revolutionary.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Student")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
