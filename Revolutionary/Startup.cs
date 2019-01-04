@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Revolutionary.Data;
+using Revolutionary.Models;
 
 namespace Revolutionary
 {
@@ -32,7 +34,10 @@ namespace Revolutionary
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddDbContext<RevolutionaryContext>();
-
+            services.AddIdentity<Account, Role>()
+                .AddEntityFrameworkStores<RevolutionaryContext>()
+                .AddDefaultUI().
+                AddDefaultTokenProviders();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

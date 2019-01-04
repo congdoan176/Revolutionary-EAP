@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Revolutionary.Models
 {
-    public class AccountRole
+    public class AccountRole:IdentityUserRole<string>
     {
-        public long AccountId { get; set; }
-        public int RoleId { get; set; }
-
-
+        public Account Account { get; set; }
+        public Role Role { get; set; }
     }
 }

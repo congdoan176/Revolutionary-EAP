@@ -19,29 +19,136 @@ namespace Revolutionary.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Revolutionary.Models.Account", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Revolutionary.Models.Account", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
 
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("Salt");
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
 
                     b.Property<int>("Status");
 
+                    b.Property<bool>("TwoFactorEnabled");
+
                     b.Property<DateTime>("UpdatedAt");
 
-                    b.Property<string>("Username");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Revolutionary.Models.AccountClazz", b =>
@@ -50,7 +157,11 @@ namespace Revolutionary.Migrations
 
                     b.Property<long>("ClazzId");
 
+                    b.Property<string>("AccountId1");
+
                     b.HasKey("AccountId", "ClazzId");
+
+                    b.HasIndex("AccountId1");
 
                     b.HasIndex("ClazzId");
 
@@ -63,7 +174,7 @@ namespace Revolutionary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("AccountId");
+                    b.Property<string>("AccountId");
 
                     b.Property<string>("Address");
 
@@ -88,15 +199,23 @@ namespace Revolutionary.Migrations
 
             modelBuilder.Entity("Revolutionary.Models.AccountRole", b =>
                 {
-                    b.Property<long>("AccountId");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId");
 
-                    b.HasKey("AccountId", "RoleId");
+                    b.Property<string>("AccountId");
+
+                    b.Property<string>("RoleId1");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AccountRoles");
+                    b.HasIndex("RoleId1");
+
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Revolutionary.Models.Clazz", b =>
@@ -132,6 +251,8 @@ namespace Revolutionary.Migrations
 
                     b.Property<long>("SubjectId");
 
+                    b.Property<string>("AccountId1");
+
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<int>("Type");
@@ -140,6 +261,8 @@ namespace Revolutionary.Migrations
 
                     b.HasKey("AccountId", "SubjectId");
 
+                    b.HasIndex("AccountId1");
+
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Marks");
@@ -147,21 +270,32 @@ namespace Revolutionary.Migrations
 
             modelBuilder.Entity("Revolutionary.Models.Role", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
 
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
 
                     b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("Revolutionary.Models.Staff", b =>
@@ -170,7 +304,7 @@ namespace Revolutionary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("AccountId");
+                    b.Property<string>("AccountId");
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -227,12 +361,43 @@ namespace Revolutionary.Migrations
                     b.ToTable("Teacher");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Revolutionary.Models.Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Revolutionary.Models.Account")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Revolutionary.Models.Account")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Revolutionary.Models.Account")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Revolutionary.Models.AccountClazz", b =>
                 {
                     b.HasOne("Revolutionary.Models.Account", "Account")
                         .WithMany("AccountClazzes")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AccountId1");
 
                     b.HasOne("Revolutionary.Models.Clazz", "Clazz")
                         .WithMany("AccountClazzes")
@@ -249,14 +414,22 @@ namespace Revolutionary.Migrations
 
             modelBuilder.Entity("Revolutionary.Models.AccountRole", b =>
                 {
-                    b.HasOne("Revolutionary.Models.Account")
+                    b.HasOne("Revolutionary.Models.Account", "Account")
                         .WithMany("AccountRoles")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AccountId");
 
                     b.HasOne("Revolutionary.Models.Role")
-                        .WithMany("AccountRole")
+                        .WithMany()
                         .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Revolutionary.Models.Role", "Role")
+                        .WithMany("AccountRole")
+                        .HasForeignKey("RoleId1");
+
+                    b.HasOne("Revolutionary.Models.Account")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -271,8 +444,7 @@ namespace Revolutionary.Migrations
                 {
                     b.HasOne("Revolutionary.Models.Account", "Account")
                         .WithMany("Marks")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AccountId1");
 
                     b.HasOne("Revolutionary.Models.Subject", "Subject")
                         .WithMany("Marks")
