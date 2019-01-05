@@ -9,7 +9,7 @@ using Revolutionary.Areas.Identity.Data.Models;
 
 namespace Revolutionary.Areas.Identity.Data.Contexts
 {
-    public class AuthenticationContext : IdentityDbContext<User, IdentityRole, string>
+    public class AuthenticationContext : IdentityDbContext<User, Role, int>
     {
         public AuthenticationContext(DbContextOptions<AuthenticationContext> options)
             : base(options)

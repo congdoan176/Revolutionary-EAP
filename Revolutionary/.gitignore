@@ -1,3 +1,6 @@
 appsettings.json
 obj/
 bin/
+Thumbs.db
+ScaffoldingReadme.txt
+.DS_Store

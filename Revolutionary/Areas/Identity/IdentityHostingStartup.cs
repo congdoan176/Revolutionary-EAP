@@ -22,7 +22,7 @@ namespace Revolutionary.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("AuthenticationConnection")));
 
-                services.AddIdentity<User, IdentityRole>(config =>
+                services.AddIdentity<User, Role>(config =>
                 {
                     config.SignIn.RequireConfirmedEmail = false;
                 }).AddEntityFrameworkStores<AuthenticationContext>().AddDefaultTokenProviders();

@@ -14,7 +14,7 @@ namespace Revolutionary.Helpers
         public static async Task Create(IServiceProvider serviceProvider, IConfiguration Configuration)
         {
             //adding customs roles
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
             string[] roleNames = { "Staff", "Student", "Restricted" }; // why there is restricted ? i am willing to temporarily ban ALL users who harms the server :)
 
@@ -24,7 +24,7 @@ namespace Revolutionary.Helpers
                 var roleExist = await RoleManager.RoleExistsAsync(roleName);
                 if (!roleExist)
                 {
-                    await RoleManager.CreateAsync(new IdentityRole(roleName));
+                    await RoleManager.CreateAsync(new Role(roleName));
                 }
             }
         }

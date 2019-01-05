@@ -11,20 +11,30 @@ namespace Revolutionary.Models
         public Subject()
         {
             this.Status = SubjectStatus.Active;
+            this.SetTime();
         }
+
+        private void SetTime()
+        {
+            this.CreatedAt = DateTime.Now;
+            this.UpdatedAt = DateTime.Now;
+        }
+
         [Key]
         [Required]
-        public string Id { get; set; }
-        [Required(ErrorMessage = "Please enter a name")]
+        public int Id { get; set; }
+        [Required(ErrorMessage = "Please enter subject name")]
         public string Name { get; set; }
         public string Description { get; set; }
         public SubjectStatus Status { get; set; }
-        public List<Class> Clazzes { get; set; }
+        public List<Class> Classes { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 
     public enum SubjectStatus
     {
         Active = 1,
-        Deactive = 0
+        Inactive = 0
     }
 }

@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190105143404_CreateIdentitySchema.cs" />
+    <Compile Remove="Migrations\20190105143404_CreateIdentitySchema.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.Designer.cs" />
+    <Compile Remove="Migrations\Application\20190105143610_CreateDataSchema.cs" />
+    <Compile Remove="Migrations\Application\20190105143610_CreateDataSchema.Designer.cs" />
   </ItemGroup>
 
 
