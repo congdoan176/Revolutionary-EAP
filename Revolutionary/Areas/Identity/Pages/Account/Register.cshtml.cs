@@ -9,31 +9,25 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Revolutionary.Models;
+using Revolutionary.Areas.Identity.Data.Models;
 
 namespace Revolutionary.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<Models.Account> _signInManager;
-        private readonly RoleManager<Models.Role> _roleManager;
-        private readonly UserManager<Models.Account> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<Models.Account> userManager,
-            SignInManager<Models.Account> signInManager,
-            RoleManager<Models.Role> roleManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            ILogger<RegisterModel> logger)
         {
-            _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -70,24 +64,11 @@ namespace Revolutionary.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new Models.Account { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                Role r = new Role("Student");
-                await _roleManager.CreateAsync(r);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, r.Name);
                     _logger.LogInformation("User created a new account with password.");
-
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { userId = user.Id, code = code },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
