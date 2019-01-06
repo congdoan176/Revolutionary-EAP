@@ -38,7 +38,7 @@ namespace Revolutionary.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "Email")]
+            [Display(Name = "ID")]
             public string Email { get; set; }
 
             [Required]

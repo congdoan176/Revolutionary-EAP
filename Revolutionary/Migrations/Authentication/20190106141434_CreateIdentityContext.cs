@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Revolutionary.Migrations
+namespace Revolutionary.Migrations.Authentication
 {
     public partial class CreateIdentityContext : Migration
     {

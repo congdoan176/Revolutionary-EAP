@@ -13,12 +13,18 @@
     <Compile Remove="Migrations\20190105145742_CreateIdentityContext.Designer.cs" />
     <Compile Remove="Migrations\20190105195244_CreateIdentitySchema.cs" />
     <Compile Remove="Migrations\20190105195244_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20190106130756_CreateIdentityContext.cs" />
+    <Compile Remove="Migrations\20190106130756_CreateIdentityContext.Designer.cs" />
+    <Compile Remove="Migrations\20190106144309_CreateDatabaseContext.cs" />
+    <Compile Remove="Migrations\20190106144309_CreateDatabaseContext.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105143610_CreateDataSchema.cs" />
     <Compile Remove="Migrations\Application\20190105143610_CreateDataSchema.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105195324_CreateApplicationSchema.cs" />
     <Compile Remove="Migrations\Application\20190105195324_CreateApplicationSchema.Designer.cs" />
+    <Compile Remove="Migrations\Application\20190106130827_CreateBaseContext.cs" />
+    <Compile Remove="Migrations\Application\20190106130827_CreateBaseContext.Designer.cs" />
   </ItemGroup>
 
 
@@ -27,6 +33,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Migrations\Application\" />
   </ItemGroup>
 
 </Project>

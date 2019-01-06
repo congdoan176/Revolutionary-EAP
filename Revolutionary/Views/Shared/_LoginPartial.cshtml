@@ -1,7 +1,6 @@
 @using Microsoft.AspNetCore.Identity
-@using Revolutionary.Areas.Identity.Data.Models
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@inject SignInManager<Revolutionary.Areas.Identity.Data.Models.User> SignInManager
+@inject UserManager<Revolutionary.Areas.Identity.Data.Models.User> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

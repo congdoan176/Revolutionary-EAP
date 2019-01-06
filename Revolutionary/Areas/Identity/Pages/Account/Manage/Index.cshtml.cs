@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Revolutionary.Areas.Identity.Data.Models;
+using Revolutionary.Services;
 
 namespace Revolutionary.Areas.Identity.Pages.Account.Manage
 {
@@ -17,18 +18,22 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ExchangeManager.AuthenticationToApplication _exService;
 
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ExchangeManager.AuthenticationToApplication exService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _exService = exService;
         }
 
         public string Username { get; set; }
+        public string Role { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -41,12 +46,28 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [Display(Name = "ID")]
             public string Email { get; set; }
 
+            
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            
+            [StringLength(10)]
+            [Display(Name = "Student code")]
+            public string StudentCode { get; set; }
+
+            
+            [StringLength(30)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            
+            [StringLength(20)]
+            [Display(Name = "Class code")]
+            public string Class { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -57,19 +78,20 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var userName = await _userManager.GetUserNameAsync(user);
-            var email = await _userManager.GetEmailAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            string Username = user.UserName;
+            IList<string> Roles = await _userManager.GetRolesAsync(user);
+            string Role = Roles.First();
 
             Input = new InputModel
             {
-                Email = email,
-                PhoneNumber = phoneNumber
+                Email = user.Email,
+                StudentCode = user.StudentCode,
+                Class = user.Class,
+                PhoneNumber = user.PhoneNumber
             };
 
-            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+            //IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user); 
+            IsEmailConfirmed = true; // always be true
 
             return Page();
         }
@@ -87,27 +109,14 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var email = await _userManager.GetEmailAsync(user);
-            if (Input.Email != email)
-            {
-                var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
-                if (!setEmailResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
-                }
-            }
-
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
-                }
-            }
+            if (Input.Email != null) user.Email = Input.Email;
+            if (Input.StudentCode != null) user.StudentCode = Input.StudentCode;
+            if (Input.Class != null) user.Class = Input.Class;
+            if (Input.Name != null) user.Name = Input.Name;
+            if (Input.PhoneNumber != null) user.PhoneNumber = Input.PhoneNumber;
+            
+            await _userManager.UpdateAsync(user);
+            await _exService.Edit(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

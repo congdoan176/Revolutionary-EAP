@@ -2,25 +2,27 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Revolutionary.Migrations.Application
+namespace Revolutionary.Migrations
 {
-    public partial class CreateBaseContext : Migration
+    public partial class CreateDatabaseContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Role",
+                name: "InviteCode",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    Code = table.Column<string>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.Id);
+                    table.PrimaryKey("PK_InviteCode", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,50 +48,17 @@ namespace Revolutionary.Migrations.Application
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Class = table.Column<string>(nullable: true),
-                    StudentCode = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InviteCode",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Class = table.Column<string>(nullable: false),
+                    StudentCode = table.Column<string>(nullable: false),
+                    PhọneNumber = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InviteCode", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_InviteCode_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -148,15 +117,20 @@ namespace Revolutionary.Migrations.Application
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "InviteCode",
+                columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
+                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 6, 22, 57, 12, 311, DateTimeKind.Local).AddTicks(5687), 1, 1, new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(1307) });
+
+            migrationBuilder.InsertData(
+                table: "InviteCode",
+                columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
+                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3833), 0, 1, new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3840) });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Class_SubjectId",
                 table: "Class",
                 column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InviteCode_RoleId",
-                table: "InviteCode",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Mark_SubjectId",
@@ -179,9 +153,6 @@ namespace Revolutionary.Migrations.Application
 
             migrationBuilder.DropTable(
                 name: "Mark");
-
-            migrationBuilder.DropTable(
-                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "Subject");

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Revolutionary.Data;
 
-namespace Revolutionary.Migrations.Application
+namespace Revolutionary.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190106130827_CreateBaseContext")]
-    partial class CreateBaseContext
+    [Migration("20190106155712_CreateDatabaseContext")]
+    partial class CreateDatabaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,68 +20,6 @@ namespace Revolutionary.Migrations.Application
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Revolutionary.Areas.Identity.Data.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("NormalizedName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
-            modelBuilder.Entity("Revolutionary.Areas.Identity.Data.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("Class");
-
-                    b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Email");
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("NormalizedEmail");
-
-                    b.Property<string>("NormalizedUserName");
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("StudentCode");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
 
             modelBuilder.Entity("Revolutionary.Models.Class", b =>
                 {
@@ -129,9 +67,27 @@ namespace Revolutionary.Migrations.Application
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("InviteCode");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "AAAAAA",
+                            CreatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 311, DateTimeKind.Local).AddTicks(5687),
+                            RoleId = 1,
+                            Status = 1,
+                            UpdatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(1307)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "BBBBBB",
+                            CreatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3833),
+                            RoleId = 0,
+                            Status = 1,
+                            UpdatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3840)
+                        });
                 });
 
             modelBuilder.Entity("Revolutionary.Models.Mark", b =>
@@ -185,19 +141,41 @@ namespace Revolutionary.Migrations.Application
                     b.ToTable("Subject");
                 });
 
+            modelBuilder.Entity("Revolutionary.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Class")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("PhọneNumber")
+                        .IsRequired();
+
+                    b.Property<string>("StudentCode")
+                        .IsRequired();
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("Revolutionary.Models.Class", b =>
                 {
                     b.HasOne("Revolutionary.Models.Subject", "Subject")
                         .WithMany("Classes")
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Revolutionary.Models.InviteCode", b =>
-                {
-                    b.HasOne("Revolutionary.Areas.Identity.Data.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -208,7 +186,7 @@ namespace Revolutionary.Migrations.Application
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Revolutionary.Areas.Identity.Data.Models.User", "User")
+                    b.HasOne("Revolutionary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

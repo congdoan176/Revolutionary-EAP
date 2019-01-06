@@ -17,17 +17,14 @@ namespace Revolutionary.Services
             _context = context;
         }
 
-        public async Task<int> Validate(String Token)
+        public async Task<int> Validate(String Code)
         {
-            return 1;
-            /*
-            InviteCode type = await _context.InviteCode.FirstOrDefaultAsync(i => string.Equals(i.Code, Token));
+            InviteCode type = await _context.InviteCode.FirstOrDefaultAsync(i => string.Equals(i.Code, Code));
             if (type == null || type.Status == InviteCodeStatus.Inactive)
             {
                 return 0;
             }
-            return type.RoleId;
-            */
+            return (int)type.RoleId;
         }
     }
 }

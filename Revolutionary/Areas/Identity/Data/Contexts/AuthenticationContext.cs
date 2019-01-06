@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Revolutionary.Areas.Identity.Data.Models;
-using Revolutionary.Models;
 
 namespace Revolutionary.Areas.Identity.Data.Contexts
 {

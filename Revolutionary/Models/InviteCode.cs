@@ -7,9 +7,8 @@ namespace Revolutionary.Models
 {
     public class InviteCode
     {
-        public InviteCode(string Code)
+        public InviteCode()
         {
-            this.Code = Code;
             this.Status = InviteCodeStatus.Active;
             this.SetTime();
         }
@@ -27,9 +26,7 @@ namespace Revolutionary.Models
         [Required]
         public InviteCodeStatus Status { get; set; }
         [Required]
-        public int RoleId { get; set; }
-        [ForeignKey("RoleId")]
-        public Role Role { get; set; }
+        public InviteCodeRole RoleId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -38,5 +35,11 @@ namespace Revolutionary.Models
     {
         Active = 1,
         Inactive = 0
+    }
+
+    public enum InviteCodeRole
+    {
+        Staff = 1,
+        Student = 0
     }
 }

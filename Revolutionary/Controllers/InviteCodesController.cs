@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Revolutionary.Areas.Identity.Data.Models;
 using Revolutionary.Data;
 using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
-    [Authorize(Roles = "Staff")]
     public class InviteCodesController : Controller
     {
         private readonly ApplicationContext _context;
@@ -25,8 +22,7 @@ namespace Revolutionary.Controllers
         // GET: InviteCodes
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.InviteCode.Include(i => i.Role);
-            return View(await applicationContext.ToListAsync());
+            return View(await _context.InviteCode.ToListAsync());
         }
 
         // GET: InviteCodes/Details/5
@@ -38,7 +34,6 @@ namespace Revolutionary.Controllers
             }
 
             var inviteCode = await _context.InviteCode
-                .Include(i => i.Role)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (inviteCode == null)
             {
@@ -51,7 +46,6 @@ namespace Revolutionary.Controllers
         // GET: InviteCodes/Create
         public IActionResult Create()
         {
-            ViewData["RoleId"] = new SelectList(_context.Set<Role>(), "Id", "Id");
             return View();
         }
 
@@ -68,7 +62,6 @@ namespace Revolutionary.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoleId"] = new SelectList(_context.Set<Role>(), "Id", "Id", inviteCode.RoleId);
             return View(inviteCode);
         }
 
@@ -85,7 +78,6 @@ namespace Revolutionary.Controllers
             {
                 return NotFound();
             }
-            ViewData["RoleId"] = new SelectList(_context.Set<Role>(), "Id", "Id", inviteCode.RoleId);
             return View(inviteCode);
         }
 
@@ -121,7 +113,6 @@ namespace Revolutionary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoleId"] = new SelectList(_context.Set<Role>(), "Id", "Id", inviteCode.RoleId);
             return View(inviteCode);
         }
 
@@ -134,7 +125,6 @@ namespace Revolutionary.Controllers
             }
 
             var inviteCode = await _context.InviteCode
-                .Include(i => i.Role)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (inviteCode == null)
             {

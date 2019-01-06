@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Revolutionary.Areas.Identity.Data.Contexts;
 using Revolutionary.Areas.Identity.Data.Models;
 using Revolutionary.Data;
-using Revolutionary.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +14,7 @@ namespace Revolutionary.Services
     {
         public class AuthenticationToApplication
         {
-            // this class will help generate dual tables from Authentication -> Application: User, Role
+            // this class will help generate Authentication -> Application: User
             private readonly ApplicationContext _context;
             public AuthenticationToApplication(ApplicationContext context)
             {
@@ -23,33 +22,72 @@ namespace Revolutionary.Services
             }
             public async Task Create(User user)
             {
-                _context.Add(user);
+                Revolutionary.Models.User u = Construct(user);
+                _context.User.Add(u);
                 await _context.SaveChangesAsync();
             }
             public async Task Edit(User user)
             {
+                Revolutionary.Models.User u = Construct(user);
                 try
                 {
-                    _context.Update(user);
+                    _context.User.Update(u);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_context.User.Any(e => e.Id == user.Id))
-                    {
-                        throw;
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
             public async Task Delete(User user)
             {
-                _context.User.Remove(user);
+                Revolutionary.Models.User u = Construct(user);
+                _context.User.Remove(u);
                 await _context.SaveChangesAsync();
             }
+            public Revolutionary.Models.User Construct(User user)
+            {
+                return new Revolutionary.Models.User()
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    StudentCode = user.StudentCode,
+                    Class = user.Class,
+                    Email = user.Email,
+                    PhọneNumber = user.PhoneNumber
+                };
+            }
         }
+    }
+}
+
+namespace Revolutionary.Models
+{
+    public class User
+    {
+        public User()
+        {
+            this.SetTime();
+        }
+        private void SetTime()
+        {
+            this.CreatedAt = DateTime.Now;
+            this.UpdatedAt = DateTime.Now;
+        }
+        [Key]
+        [Required]
+        public int Id { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Class { get; set; }
+        [Required]
+        public string StudentCode { get; set; }
+        [Required]
+        public string PhọneNumber { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

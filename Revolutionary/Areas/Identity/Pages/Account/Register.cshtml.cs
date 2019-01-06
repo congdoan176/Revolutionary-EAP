@@ -48,11 +48,31 @@ namespace Revolutionary.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "InviteCode")]
+            [Display(Name = "Invite code (AAAAAA = Staff, BBBBBB = Student)")]
             public string InviteCode { get; set; }
+            
+            [Required]
+            [Phone]
+            [Display(Name = "Phone number")]
+            public string PhoneNumber { get; set; }
 
             [Required]
-            [Display(Name = "Email")]
+            [StringLength(10)]
+            [Display(Name = "Student code")]
+            public string StudentCode { get; set; }
+
+            [Required]
+            [StringLength(30)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            [Required]
+            [StringLength(20)]
+            [Display(Name = "Class code")]
+            public string Class { get; set; }
+
+            [Required]
+            [Display(Name = "ID")]
             public string Email { get; set; }
 
             [Required]
@@ -84,7 +104,7 @@ namespace Revolutionary.Areas.Identity.Pages.Account
                 } else {
                     string UserRole = "Student";
                     if (InviteCodeValidation == 1) UserRole = "Staff";
-                    var user = new User { UserName = Input.Email, Email = Input.Email };
+                    var user = new User { UserName = Input.Email, Email = Input.Email, Name = Input.Name, Class = Input.Class, StudentCode = Input.StudentCode, PhoneNumber = Input.PhoneNumber };
                     var result = await _userManager.CreateAsync(user, Input.Password);
                     await _exService.Create(user);
                     if (result.Succeeded)
