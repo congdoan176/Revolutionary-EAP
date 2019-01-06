@@ -10,7 +10,7 @@ using Revolutionary.Data;
 namespace Revolutionary.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190106155712_CreateDatabaseContext")]
+    [Migration("20190106182129_CreateDatabaseContext")]
     partial class CreateDatabaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,19 +74,19 @@ namespace Revolutionary.Migrations
                         {
                             Id = 1,
                             Code = "AAAAAA",
-                            CreatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 311, DateTimeKind.Local).AddTicks(5687),
+                            CreatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 438, DateTimeKind.Local).AddTicks(3487),
                             RoleId = 1,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(1307)
+                            UpdatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(2046)
                         },
                         new
                         {
                             Id = 2,
                             Code = "BBBBBB",
-                            CreatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3833),
+                            CreatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5254),
                             RoleId = 0,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3840)
+                            UpdatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5261)
                         });
                 });
 
@@ -143,9 +143,7 @@ namespace Revolutionary.Migrations
 
             modelBuilder.Entity("Revolutionary.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("Id");
 
                     b.Property<string>("Class")
                         .IsRequired();

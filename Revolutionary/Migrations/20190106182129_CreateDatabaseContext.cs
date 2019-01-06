@@ -46,8 +46,7 @@ namespace Revolutionary.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<int>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Class = table.Column<string>(nullable: false),
@@ -120,12 +119,12 @@ namespace Revolutionary.Migrations
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 6, 22, 57, 12, 311, DateTimeKind.Local).AddTicks(5687), 1, 1, new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(1307) });
+                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 7, 1, 21, 29, 438, DateTimeKind.Local).AddTicks(3487), 1, 1, new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(2046) });
 
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3833), 0, 1, new DateTime(2019, 1, 6, 22, 57, 12, 313, DateTimeKind.Local).AddTicks(3840) });
+                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5254), 0, 1, new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5261) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_SubjectId",

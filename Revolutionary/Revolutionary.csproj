@@ -17,6 +17,12 @@
     <Compile Remove="Migrations\20190106130756_CreateIdentityContext.Designer.cs" />
     <Compile Remove="Migrations\20190106144309_CreateDatabaseContext.cs" />
     <Compile Remove="Migrations\20190106144309_CreateDatabaseContext.Designer.cs" />
+    <Compile Remove="Migrations\20190106155712_CreateDatabaseContext.cs" />
+    <Compile Remove="Migrations\20190106155712_CreateDatabaseContext.Designer.cs" />
+    <Compile Remove="Migrations\20190106181255_CreateDatabaseSchema.cs" />
+    <Compile Remove="Migrations\20190106181255_CreateDatabaseSchema.Designer.cs" />
+    <Compile Remove="Migrations\20190106181840_CreateDatabaseContext.cs" />
+    <Compile Remove="Migrations\20190106181840_CreateDatabaseContext.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105143610_CreateDataSchema.cs" />
