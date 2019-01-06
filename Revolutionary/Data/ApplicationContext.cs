@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Revolutionary.Areas.Identity.Data.Models;
 using Revolutionary.Models;
 
 namespace Revolutionary.Data
@@ -19,5 +20,9 @@ namespace Revolutionary.Data
         public DbSet<Mark> Mark { get; set; }
         public DbSet<Subject> Subject { get; set; }
         public DbSet<InviteCode> InviteCode { get; set; }
+        #region DummyDbSet
+        public DbSet<User> User { get; set; }
+        public DbSet<Role> Role { get; set; }
+        #endregion
     }
 }

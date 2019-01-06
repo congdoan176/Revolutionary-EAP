@@ -167,8 +167,6 @@ namespace Revolutionary.Migrations
 
                     b.Property<string>("StudentCode");
 
-                    b.Property<string>("Ticket");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -185,88 +183,6 @@ namespace Revolutionary.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Revolutionary.Models.Class", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<int>("Session");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.Property<int>("Status");
-
-                    b.Property<int>("SubjectId");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.Property<int?>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Class");
-                });
-
-            modelBuilder.Entity("Revolutionary.Models.Mark", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<float>("MarkBase");
-
-                    b.Property<int>("Status");
-
-                    b.Property<int>("SubjectId");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.Property<int>("UserId");
-
-                    b.Property<float>("Value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Mark");
-                });
-
-            modelBuilder.Entity("Revolutionary.Models.Subject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<int>("Status");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subject");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -310,31 +226,6 @@ namespace Revolutionary.Migrations
                 {
                     b.HasOne("Revolutionary.Areas.Identity.Data.Models.User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Revolutionary.Models.Class", b =>
-                {
-                    b.HasOne("Revolutionary.Models.Subject", "Subject")
-                        .WithMany("Classes")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Revolutionary.Areas.Identity.Data.Models.User")
-                        .WithMany("Classes")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Revolutionary.Models.Mark", b =>
-                {
-                    b.HasOne("Revolutionary.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Revolutionary.Areas.Identity.Data.Models.User", "User")
-                        .WithMany("Marks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

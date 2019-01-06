@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Revolutionary.Services;
+using Revolutionary.Areas.Identity.Data.Contexts;
 
 namespace Revolutionary
 {
@@ -32,6 +33,17 @@ namespace Revolutionary
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            #region Add CORS  
+            services.AddCors(options => options.AddPolicy("Cors", builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+            #endregion
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -43,31 +55,10 @@ namespace Revolutionary
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             
-            #region TokenAuthentication
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]));
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(config =>
-            {
-                config.RequireHttpsMetadata = false;
-                config.SaveToken = true;
-                config.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    IssuerSigningKey = signingKey,
-                    ValidateAudience = true,
-                    ValidAudience = this.Configuration["Tokens:Audience"],
-                    ValidateIssuer = true,
-                    ValidIssuer = this.Configuration["Tokens:Issuer"],
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true
-                };
-            });
-            #endregion
-
-            #region InviteCodes
+            
+            #region Scopes
             services.AddScoped<InviteCodesManager>();
+            services.AddScoped<ExchangeManager.AuthenticationToApplication>();
             #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -88,10 +79,13 @@ namespace Revolutionary
                 app.UseHsts();
             }
 
+            app.UseCors("Cors");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+
+            
 
             app.UseMvc(routes =>
             {

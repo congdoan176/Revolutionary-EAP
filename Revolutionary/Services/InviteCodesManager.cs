@@ -19,12 +19,15 @@ namespace Revolutionary.Services
 
         public async Task<int> Validate(String Token)
         {
+            return 1;
+            /*
             InviteCode type = await _context.InviteCode.FirstOrDefaultAsync(i => string.Equals(i.Code, Token));
             if (type == null || type.Status == InviteCodeStatus.Inactive)
             {
                 return 0;
             }
             return type.RoleId;
+            */
         }
     }
 }

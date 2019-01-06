@@ -72,8 +72,6 @@ namespace Revolutionary.Migrations.Application
 
                     b.Property<string>("StudentCode");
 
-                    b.Property<string>("Ticket");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName");
@@ -103,13 +101,9 @@ namespace Revolutionary.Migrations.Application
 
                     b.Property<DateTime>("UpdatedAt");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SubjectId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Class");
                 });
@@ -195,10 +189,6 @@ namespace Revolutionary.Migrations.Application
                         .WithMany("Classes")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Revolutionary.Areas.Identity.Data.Models.User")
-                        .WithMany("Classes")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Revolutionary.Models.InviteCode", b =>
@@ -217,7 +207,7 @@ namespace Revolutionary.Migrations.Application
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Revolutionary.Areas.Identity.Data.Models.User", "User")
-                        .WithMany("Marks")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

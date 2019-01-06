@@ -16,12 +16,5 @@ namespace Revolutionary.Areas.Identity.Data.Models
         public string Class { get; set; }
         [PersonalData]
         public string StudentCode { get; set; }
-        [ProtectedPersonalData]
-        public List<Class> Classes { get; set; }
-        [ProtectedPersonalData]
-        public List<Mark> Marks { get; set; }
-        [ProtectedPersonalData]
-        public string Ticket { get; set; } // a golden ticket for logging in instantly -> referring to UWP app
-        
     }
 }

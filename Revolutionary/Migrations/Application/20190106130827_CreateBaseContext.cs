@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Revolutionary.Migrations.Application
 {
-    public partial class CreateApplicationSchema : Migration
+    public partial class CreateBaseContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,8 +62,7 @@ namespace Revolutionary.Migrations.Application
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Class = table.Column<string>(nullable: true),
-                    StudentCode = table.Column<string>(nullable: true),
-                    Ticket = table.Column<string>(nullable: true)
+                    StudentCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,8 +104,7 @@ namespace Revolutionary.Migrations.Application
                     Session = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: true)
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,12 +115,6 @@ namespace Revolutionary.Migrations.Application
                         principalTable: "Subject",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Class_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,11 +152,6 @@ namespace Revolutionary.Migrations.Application
                 name: "IX_Class_SubjectId",
                 table: "Class",
                 column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Class_UserId",
-                table: "Class",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InviteCode_RoleId",

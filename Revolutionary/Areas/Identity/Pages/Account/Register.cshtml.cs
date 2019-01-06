@@ -22,19 +22,22 @@ namespace Revolutionary.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly InviteCodesManager _inviCodeService;
+        private readonly ExchangeManager.AuthenticationToApplication _exService;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            InviteCodesManager inviCodeService)
+            InviteCodesManager inviCodeService,
+            ExchangeManager.AuthenticationToApplication exService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _inviCodeService = inviCodeService;
+            _exService = exService;
         }
 
         [BindProperty]
@@ -45,11 +48,11 @@ namespace Revolutionary.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "Invite Code")]
+            [Display(Name = "InviteCode")]
             public string InviteCode { get; set; }
 
             [Required]
-            [Display(Name = "ID")]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
@@ -83,6 +86,7 @@ namespace Revolutionary.Areas.Identity.Pages.Account
                     if (InviteCodeValidation == 1) UserRole = "Staff";
                     var user = new User { UserName = Input.Email, Email = Input.Email };
                     var result = await _userManager.CreateAsync(user, Input.Password);
+                    await _exService.Create(user);
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created a new account with password.");

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Revolutionary.Areas.Identity.Data.Models
 {
-    public class Role: IdentityRole<int>
+    public class Role : IdentityRole<int>
     {
         public Role(string Name)
         {

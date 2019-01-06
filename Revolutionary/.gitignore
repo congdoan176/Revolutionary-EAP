@@ -2,3 +2,4 @@ appsettings.json
 Thumbs.db
 .DS_Store
 bin/
+obj/

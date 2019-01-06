@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Revolutionary.Areas.Identity.Data.Models;
+using Revolutionary.Models;
 
 namespace Revolutionary.Areas.Identity.Data.Contexts
 {
@@ -15,7 +16,6 @@ namespace Revolutionary.Areas.Identity.Data.Contexts
             : base(options)
         {
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
