@@ -78,9 +78,9 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            string Username = user.UserName;
+            Username = user.UserName;
             IList<string> Roles = await _userManager.GetRolesAsync(user);
-            string Role = Roles.First();
+            Role = Roles.First();
 
             Input = new InputModel
             {
@@ -108,8 +108,7 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            if (Input.Email != null) user.Email = Input.Email;
+            
             if (Input.StudentCode != null) user.StudentCode = Input.StudentCode;
             if (Input.Class != null) user.Class = Input.Class;
             if (Input.Name != null) user.Name = Input.Name;
