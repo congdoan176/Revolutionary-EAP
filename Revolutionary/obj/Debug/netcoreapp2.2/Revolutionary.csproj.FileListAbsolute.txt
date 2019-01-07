@@ -73,11 +73,6 @@ D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Invi
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\InviteCodes\Details.g.cshtml.cs
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\InviteCodes\Edit.g.cshtml.cs
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\InviteCodes\Index.g.cshtml.cs
-D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Create.g.cshtml.cs
-D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Delete.g.cshtml.cs
-D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Details.g.cshtml.cs
-D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Edit.g.cshtml.cs
-D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Index.g.cshtml.cs
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Marks\Create.g.cshtml.cs
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Marks\Delete.g.cshtml.cs
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Marks\Details.g.cshtml.cs
@@ -93,3 +88,8 @@ D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Clas
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\ClassRegisters\Details.g.cshtml.cs
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\ClassRegisters\Edit.g.cshtml.cs
 D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\ClassRegisters\Index.g.cshtml.cs
+D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Create.g.cshtml.cs
+D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Delete.g.cshtml.cs
+D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Details.g.cshtml.cs
+D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Edit.g.cshtml.cs
+D:\Projects\Revolutionary\Revolutionary\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Index.g.cshtml.cs

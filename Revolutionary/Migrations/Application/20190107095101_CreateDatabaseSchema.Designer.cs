@@ -10,7 +10,7 @@ using Revolutionary.Data;
 namespace Revolutionary.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190107084125_CreateDatabaseSchema")]
+    [Migration("20190107095101_CreateDatabaseSchema")]
     partial class CreateDatabaseSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,15 @@ namespace Revolutionary.Migrations.Application
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Code")
+                        .IsRequired();
+
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<DateTime>("EndDate");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("Session");
 
@@ -91,19 +97,19 @@ namespace Revolutionary.Migrations.Application
                         {
                             Id = 1,
                             Code = "AAAAAA",
-                            CreatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 691, DateTimeKind.Local).AddTicks(5726),
+                            CreatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 205, DateTimeKind.Local).AddTicks(4474),
                             RoleId = 1,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 692, DateTimeKind.Local).AddTicks(8562)
+                            UpdatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(1863)
                         },
                         new
                         {
                             Id = 2,
                             Code = "BBBBBB",
-                            CreatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 693, DateTimeKind.Local).AddTicks(963),
+                            CreatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(5333),
                             RoleId = 0,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 693, DateTimeKind.Local).AddTicks(969)
+                            UpdatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(5339)
                         });
                 });
 
