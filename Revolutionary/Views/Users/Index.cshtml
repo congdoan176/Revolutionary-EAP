@@ -30,17 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
+            
             @if (User.IsInRole("Staff"))
             {
                 <th></th>
             }
-            </tr>
+        </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
@@ -60,12 +55,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
+            
             @if (User.IsInRole("Staff"))
             {
                 <td>

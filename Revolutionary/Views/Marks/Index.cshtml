@@ -27,12 +27,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Penalty)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
@@ -44,7 +39,7 @@
             </th>
             @if (User.IsInRole("Staff"))
             {
-                <th></th>
+                <th>Action</th>
             }
             </tr>
     </thead>
@@ -63,12 +58,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Penalty)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
