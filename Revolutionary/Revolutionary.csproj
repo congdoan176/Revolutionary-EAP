@@ -49,7 +49,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Migrations\Application\" />
     <Folder Include="Migrations\Authentication\" />
   </ItemGroup>
 

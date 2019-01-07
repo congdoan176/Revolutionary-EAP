@@ -61,7 +61,7 @@ namespace Revolutionary.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _userManager.CreateAsync(Construct(user));
+                await _userManager.CreateAsync(Construct(user), "iloveyou");
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -160,7 +160,7 @@ namespace Revolutionary.Controllers
         {
             return new Revolutionary.Areas.Identity.Data.Models.User()
             {
-                Id = user.Id,
+                UserName = user.Email,
                 Name = user.Name,
                 StudentCode = user.StudentCode,
                 Class = user.Class,
