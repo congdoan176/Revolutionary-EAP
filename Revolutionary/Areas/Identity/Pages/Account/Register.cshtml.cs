@@ -22,7 +22,7 @@ namespace Revolutionary.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly InviteCodesManager _inviCodeService;
-        private readonly ExchangeManager.AuthenticationToApplication _exService;
+        private readonly UserExchangeManager.AuthenticationToApplication _exService;
 
         public RegisterModel(
             UserManager<User> userManager,
@@ -30,7 +30,7 @@ namespace Revolutionary.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             InviteCodesManager inviCodeService,
-            ExchangeManager.AuthenticationToApplication exService)
+            UserExchangeManager.AuthenticationToApplication exService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

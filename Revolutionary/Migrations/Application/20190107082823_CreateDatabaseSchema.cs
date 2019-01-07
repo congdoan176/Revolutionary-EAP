@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Revolutionary.Migrations
+namespace Revolutionary.Migrations.Application
 {
-    public partial class CreateDatabaseContext : Migration
+    public partial class CreateDatabaseSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,15 +86,43 @@ namespace Revolutionary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ClassRegister",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: false),
+                    ClassId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClassRegister", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClassRegister_Class_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Class",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClassRegister_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Mark",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(nullable: false),
-                    SubjectId = table.Column<int>(nullable: false),
-                    Value = table.Column<float>(nullable: false),
-                    MarkBase = table.Column<float>(nullable: false),
+                    ClassId = table.Column<int>(nullable: false),
+                    Theory = table.Column<float>(nullable: false),
+                    Practical = table.Column<float>(nullable: false),
+                    Assignment = table.Column<float>(nullable: false),
+                    Penalty = table.Column<float>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: false)
@@ -103,9 +131,9 @@ namespace Revolutionary.Migrations
                 {
                     table.PrimaryKey("PK_Mark", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Mark_Subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subject",
+                        name: "FK_Mark_Class_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -119,12 +147,12 @@ namespace Revolutionary.Migrations
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 7, 1, 21, 29, 438, DateTimeKind.Local).AddTicks(3487), 1, 1, new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(2046) });
+                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 7, 15, 28, 22, 955, DateTimeKind.Local).AddTicks(1189), 1, 1, new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(4316) });
 
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5254), 0, 1, new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5261) });
+                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7614), 0, 1, new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7620) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_SubjectId",
@@ -132,9 +160,14 @@ namespace Revolutionary.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mark_SubjectId",
+                name: "IX_ClassRegister_UserId",
+                table: "ClassRegister",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mark_ClassId",
                 table: "Mark",
-                column: "SubjectId");
+                column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Mark_UserId",
@@ -145,7 +178,7 @@ namespace Revolutionary.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Class");
+                name: "ClassRegister");
 
             migrationBuilder.DropTable(
                 name: "InviteCode");
@@ -154,10 +187,13 @@ namespace Revolutionary.Migrations
                 name: "Mark");
 
             migrationBuilder.DropTable(
-                name: "Subject");
+                name: "Class");
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Subject");
         }
     }
 }

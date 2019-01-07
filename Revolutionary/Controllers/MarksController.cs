@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,6 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
-    [Authorize(Roles = "Staff")]
     public class MarksController : Controller
     {
         private readonly ApplicationContext _context;
@@ -24,7 +22,7 @@ namespace Revolutionary.Controllers
         // GET: Marks
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.Mark.Include(m => m.Subject);
+            var applicationContext = _context.Mark.Include(m => m.Class).Include(m => m.User);
             return View(await applicationContext.ToListAsync());
         }
 
@@ -37,7 +35,8 @@ namespace Revolutionary.Controllers
             }
 
             var mark = await _context.Mark
-                .Include(m => m.Subject)
+                .Include(m => m.Class)
+                .Include(m => m.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (mark == null)
             {
@@ -50,7 +49,8 @@ namespace Revolutionary.Controllers
         // GET: Marks/Create
         public IActionResult Create()
         {
-            ViewData["SubjectId"] = new SelectList(_context.Set<Subject>(), "Id", "Name");
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,SubjectId,Value,MarkBase,CreatedAt,UpdatedAt,Status")] Mark mark)
+        public async Task<IActionResult> Create([Bind("Id,UserId,ClassId,Theory,Practical,Assignment,Penalty,CreatedAt,UpdatedAt,Status")] Mark mark)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,8 @@ namespace Revolutionary.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectId"] = new SelectList(_context.Set<Subject>(), "Id", "Name", mark.SubjectId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id", mark.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", mark.UserId);
             return View(mark);
         }
 
@@ -84,7 +85,8 @@ namespace Revolutionary.Controllers
             {
                 return NotFound();
             }
-            ViewData["SubjectId"] = new SelectList(_context.Set<Subject>(), "Id", "Name", mark.SubjectId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id", mark.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", mark.UserId);
             return View(mark);
         }
 
@@ -93,7 +95,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,SubjectId,Value,MarkBase,CreatedAt,UpdatedAt,Status")] Mark mark)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ClassId,Theory,Practical,Assignment,Penalty,CreatedAt,UpdatedAt,Status")] Mark mark)
         {
             if (id != mark.Id)
             {
@@ -120,7 +122,8 @@ namespace Revolutionary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectId"] = new SelectList(_context.Set<Subject>(), "Id", "Name", mark.SubjectId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id", mark.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", mark.UserId);
             return View(mark);
         }
 
@@ -133,7 +136,8 @@ namespace Revolutionary.Controllers
             }
 
             var mark = await _context.Mark
-                .Include(m => m.Subject)
+                .Include(m => m.Class)
+                .Include(m => m.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (mark == null)
             {

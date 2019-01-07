@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Revolutionary.Data;
 
-namespace Revolutionary.Migrations
+namespace Revolutionary.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190106182129_CreateDatabaseContext")]
-    partial class CreateDatabaseContext
+    [Migration("20190107082823_CreateDatabaseSchema")]
+    partial class CreateDatabaseSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,6 +48,23 @@ namespace Revolutionary.Migrations
                     b.ToTable("Class");
                 });
 
+            modelBuilder.Entity("Revolutionary.Models.ClassRegister", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ClassRegister");
+                });
+
             modelBuilder.Entity("Revolutionary.Models.InviteCode", b =>
                 {
                     b.Property<int>("Id")
@@ -74,19 +91,19 @@ namespace Revolutionary.Migrations
                         {
                             Id = 1,
                             Code = "AAAAAA",
-                            CreatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 438, DateTimeKind.Local).AddTicks(3487),
+                            CreatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 955, DateTimeKind.Local).AddTicks(1189),
                             RoleId = 1,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(2046)
+                            UpdatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(4316)
                         },
                         new
                         {
                             Id = 2,
                             Code = "BBBBBB",
-                            CreatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5254),
+                            CreatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7614),
                             RoleId = 0,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 1, 21, 29, 439, DateTimeKind.Local).AddTicks(5261)
+                            UpdatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7620)
                         });
                 });
 
@@ -96,23 +113,27 @@ namespace Revolutionary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<float>("Assignment");
+
+                    b.Property<int>("ClassId");
+
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<float>("MarkBase");
+                    b.Property<float>("Penalty");
+
+                    b.Property<float>("Practical");
 
                     b.Property<int>("Status");
 
-                    b.Property<int>("SubjectId");
+                    b.Property<float>("Theory");
 
                     b.Property<DateTime>("UpdatedAt");
 
                     b.Property<int>("UserId");
 
-                    b.Property<float>("Value");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SubjectId");
+                    b.HasIndex("ClassId");
 
                     b.HasIndex("UserId");
 
@@ -177,15 +198,28 @@ namespace Revolutionary.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Revolutionary.Models.Mark", b =>
+            modelBuilder.Entity("Revolutionary.Models.ClassRegister", b =>
                 {
-                    b.HasOne("Revolutionary.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
+                    b.HasOne("Revolutionary.Models.Class", "Class")
+                        .WithMany("ClassRegisters")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Revolutionary.Models.User", "User")
+                        .WithMany("ClassRegisters")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Revolutionary.Models.Mark", b =>
+                {
+                    b.HasOne("Revolutionary.Models.Class", "Class")
                         .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Revolutionary.Models.User", "User")
+                        .WithMany("Marks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

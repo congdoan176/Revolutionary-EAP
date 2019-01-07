@@ -18,13 +18,13 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
-        private readonly ExchangeManager.AuthenticationToApplication _exService;
+        private readonly UserExchangeManager.AuthenticationToApplication _exService;
 
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender,
-            ExchangeManager.AuthenticationToApplication exService)
+            UserExchangeManager.AuthenticationToApplication exService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

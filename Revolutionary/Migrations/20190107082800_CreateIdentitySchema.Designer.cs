@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Revolutionary.Areas.Identity.Data.Contexts;
 
-namespace Revolutionary.Migrations.Authentication
+namespace Revolutionary.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20190106141434_CreateIdentityContext")]
-    partial class CreateIdentityContext
+    [Migration("20190107082800_CreateIdentitySchema")]
+    partial class CreateIdentitySchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

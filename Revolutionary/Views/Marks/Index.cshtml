@@ -13,13 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.Theory)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Value)
+                @Html.DisplayNameFor(model => model.Practical)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MarkBase)
+                @Html.DisplayNameFor(model => model.Assignment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Penalty)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedAt)
@@ -31,7 +34,10 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Subject)
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class)
             </th>
             <th></th>
         </tr>
@@ -40,13 +46,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.Theory)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Value)
+                @Html.DisplayFor(modelItem => item.Practical)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MarkBase)
+                @Html.DisplayFor(modelItem => item.Assignment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Penalty)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
@@ -58,7 +67,10 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Subject.Name)
+                @Html.DisplayFor(modelItem => item.User.Class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

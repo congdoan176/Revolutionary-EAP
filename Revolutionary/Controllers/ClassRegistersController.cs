@@ -10,23 +10,23 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
-    public class ClassesController : Controller
+    public class ClassRegistersController : Controller
     {
         private readonly ApplicationContext _context;
 
-        public ClassesController(ApplicationContext context)
+        public ClassRegistersController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: Classes
+        // GET: ClassRegisters
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.Class.Include(c => c.Subject);
+            var applicationContext = _context.ClassRegister.Include(c => c.Class).Include(c => c.User);
             return View(await applicationContext.ToListAsync());
         }
 
-        // GET: Classes/Details/5
+        // GET: ClassRegisters/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,45 @@ namespace Revolutionary.Controllers
                 return NotFound();
             }
 
-            var @class = await _context.Class
-                .Include(c => c.Subject)
+            var classRegister = await _context.ClassRegister
+                .Include(c => c.Class)
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@class == null)
+            if (classRegister == null)
             {
                 return NotFound();
             }
 
-            return View(@class);
+            return View(classRegister);
         }
 
-        // GET: Classes/Create
+        // GET: ClassRegisters/Create
         public IActionResult Create()
         {
-            ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class");
             return View();
         }
 
-        // POST: Classes/Create
+        // POST: ClassRegisters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,SubjectId,StartDate,EndDate,Session,Status,CreatedAt,UpdatedAt")] Class @class)
+        public async Task<IActionResult> Create([Bind("Id,UserId,ClassId")] ClassRegister classRegister)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@class);
+                _context.Add(classRegister);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name", @class.SubjectId);
-            return View(@class);
+            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id", classRegister.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
+            return View(classRegister);
         }
 
-        // GET: Classes/Edit/5
+        // GET: ClassRegisters/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +80,24 @@ namespace Revolutionary.Controllers
                 return NotFound();
             }
 
-            var @class = await _context.Class.FindAsync(id);
-            if (@class == null)
+            var classRegister = await _context.ClassRegister.FindAsync(id);
+            if (classRegister == null)
             {
                 return NotFound();
             }
-            ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name", @class.SubjectId);
-            return View(@class);
+            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id", classRegister.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
+            return View(classRegister);
         }
 
-        // POST: Classes/Edit/5
+        // POST: ClassRegisters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,SubjectId,StartDate,EndDate,Session,Status,CreatedAt,UpdatedAt")] Class @class)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ClassId")] ClassRegister classRegister)
         {
-            if (id != @class.Id)
+            if (id != classRegister.Id)
             {
                 return NotFound();
             }
@@ -102,12 +106,12 @@ namespace Revolutionary.Controllers
             {
                 try
                 {
-                    _context.Update(@class);
+                    _context.Update(classRegister);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClassExists(@class.Id))
+                    if (!ClassRegisterExists(classRegister.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +122,12 @@ namespace Revolutionary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name", @class.SubjectId);
-            return View(@class);
+            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id", classRegister.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
+            return View(classRegister);
         }
 
-        // GET: Classes/Delete/5
+        // GET: ClassRegisters/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +135,32 @@ namespace Revolutionary.Controllers
                 return NotFound();
             }
 
-            var @class = await _context.Class
-                .Include(c => c.Subject)
+            var classRegister = await _context.ClassRegister
+                .Include(c => c.Class)
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@class == null)
+            if (classRegister == null)
             {
                 return NotFound();
             }
 
-            return View(@class);
+            return View(classRegister);
         }
 
-        // POST: Classes/Delete/5
+        // POST: ClassRegisters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @class = await _context.Class.FindAsync(id);
-            _context.Class.Remove(@class);
+            var classRegister = await _context.ClassRegister.FindAsync(id);
+            _context.ClassRegister.Remove(classRegister);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClassExists(int id)
+        private bool ClassRegisterExists(int id)
         {
-            return _context.Class.Any(e => e.Id == id);
+            return _context.ClassRegister.Any(e => e.Id == id);
         }
     }
 }

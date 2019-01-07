@@ -24,6 +24,7 @@ namespace Revolutionary.Data
         }
 
         public DbSet<Class> Class { get; set; }
+        public DbSet<ClassRegister> ClassRegister { get; set; }
         /*public DbSet<Revolutionary.Models.ClassSubject> ClassSubject { get; set; }
         public DbSet<Revolutionary.Models.ClassUser> ClassUser { get; set; }*/
         public DbSet<Mark> Mark { get; set; }

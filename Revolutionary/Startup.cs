@@ -58,7 +58,7 @@ namespace Revolutionary
             
             #region Scopes
             services.AddScoped<InviteCodesManager>();
-            services.AddScoped<ExchangeManager.AuthenticationToApplication>();
+            services.AddScoped<UserExchangeManager.AuthenticationToApplication>();
             #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

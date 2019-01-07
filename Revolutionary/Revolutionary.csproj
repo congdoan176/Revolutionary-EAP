@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20190106181255_CreateDatabaseSchema.Designer.cs" />
     <Compile Remove="Migrations\20190106181840_CreateDatabaseContext.cs" />
     <Compile Remove="Migrations\20190106181840_CreateDatabaseContext.Designer.cs" />
+    <Compile Remove="Migrations\20190106182129_CreateDatabaseContext.cs" />
+    <Compile Remove="Migrations\20190106182129_CreateDatabaseContext.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.cs" />
     <Compile Remove="Migrations\Application\20190105095318_CreateTableScheme.Designer.cs" />
     <Compile Remove="Migrations\Application\20190105143610_CreateDataSchema.cs" />
@@ -31,6 +33,8 @@
     <Compile Remove="Migrations\Application\20190105195324_CreateApplicationSchema.Designer.cs" />
     <Compile Remove="Migrations\Application\20190106130827_CreateBaseContext.cs" />
     <Compile Remove="Migrations\Application\20190106130827_CreateBaseContext.Designer.cs" />
+    <Compile Remove="Migrations\Authentication\20190106141434_CreateIdentityContext.cs" />
+    <Compile Remove="Migrations\Authentication\20190106141434_CreateIdentityContext.Designer.cs" />
   </ItemGroup>
 
 
@@ -44,6 +48,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\Application\" />
+    <Folder Include="Migrations\Authentication\" />
   </ItemGroup>
 
 </Project>
