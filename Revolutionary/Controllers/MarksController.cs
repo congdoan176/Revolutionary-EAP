@@ -11,6 +11,7 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
+    [Authorize(Roles = "Staff")]
     public class MarksController : Controller
     {
         private readonly ApplicationContext _context;
@@ -19,7 +20,7 @@ namespace Revolutionary.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Student")]
         // GET: Marks
         public async Task<IActionResult> Index(string Search, float? Filter) // filter: 
         {

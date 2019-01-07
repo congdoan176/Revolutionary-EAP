@@ -12,6 +12,7 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
+    [Authorize(Roles = "Staff")]
     public class UsersController : Controller
     {
         private readonly UserManager<Revolutionary.Areas.Identity.Data.Models.User> _userManager;
@@ -22,7 +23,7 @@ namespace Revolutionary.Controllers
             _context = context;
             _userManager = userManager;
         }
-
+        [Authorize(Roles = "Student")]
         // GET: Users
         public async Task<IActionResult> Index(string Search)
         {

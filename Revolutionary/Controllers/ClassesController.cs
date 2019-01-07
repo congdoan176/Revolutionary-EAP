@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
+    [Authorize(Roles ="Staff")]
     public class ClassesController : Controller
     {
         private readonly ApplicationContext _context;
@@ -18,7 +20,7 @@ namespace Revolutionary.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Student")]
         // GET: Classes
         // optional: Classes?Search=
         public async Task<IActionResult> Index(string Search)
