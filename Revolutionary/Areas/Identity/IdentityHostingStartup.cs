@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -30,6 +31,16 @@ namespace Revolutionary.Areas.Identity
                 }).AddEntityFrameworkStores<AuthenticationContext>().AddDefaultTokenProviders();
 
                 services.AddTransient<IEmailSender, EmailSender>();
+                services.ConfigureApplicationCookie(options =>
+                {
+                    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                    options.Cookie.Name = "RevolutionaryGoldenTicket";
+                    options.Cookie.HttpOnly = false;
+                    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                    options.LoginPath = "/Identity/Account/Login";
+                    options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                    options.SlidingExpiration = true;
+                });
             });
         }
     }
