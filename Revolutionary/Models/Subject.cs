@@ -35,6 +35,6 @@ namespace Revolutionary.Models
     public enum SubjectStatus
     {
         Active = 1,
-        Inactive = 0
+        Inactive = 2
     }
 }

@@ -23,7 +23,7 @@ namespace Revolutionary.Controllers
             _context = context;
             _userManager = userManager;
         }
-        [Authorize(Roles = "Student")]
+        
         // GET: Users
         public async Task<IActionResult> Index(string Search)
         {
@@ -33,7 +33,7 @@ namespace Revolutionary.Controllers
                 Users = Users.Where(cs => cs.Name.Contains(Search) || cs.StudentCode.Contains(Search) || cs.Class.Contains(Search) || cs.PhoneNumber.Contains(Search) || cs.Email.Contains(Search));
                 return View(await Users.ToListAsync());
             }
-            return View(await _context.User.Include(u => u.ClassRegisters).ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
         // GET: Users/Details/5

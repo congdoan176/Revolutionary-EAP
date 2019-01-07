@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,28 +12,40 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
+    [Authorize]
     public class ClassRegistersController : Controller
     {
         private readonly ApplicationContext _context;
+        private readonly UserManager<Revolutionary.Areas.Identity.Data.Models.User> _userManager;
 
-        public ClassRegistersController(ApplicationContext context)
+        public ClassRegistersController(ApplicationContext context, UserManager<Revolutionary.Areas.Identity.Data.Models.User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: ClassRegisters
         public async Task<IActionResult> Index(String Search)
         {
-            if (!String.IsNullOrEmpty(Search))
+            if (String.Equals("Student", await GetCurrentUserRoleAsync()))
             {
-                var Registers = from c in _context.ClassRegister select c;
-                Registers = Registers.Where(cs => cs.User.Name.Contains(Search) || cs.User.StudentCode.Contains(Search) || cs.User.Class.Contains(Search) || cs.Class.Name.Contains(Search) || cs.Class.Subject.Name.Contains(Search));
-                return View(await Registers.ToListAsync());
+                var user = await GetCurrentUserAsync();
+                var Classes = from c in _context.ClassRegister select c;
+                Classes = Classes.Where(cs => cs.UserId == user.Id);
+                return View(await Classes.ToListAsync());
+            } else
+            {
+                if (!String.IsNullOrEmpty(Search))
+                {
+                    var Classes = from c in _context.ClassRegister select c;
+                    Classes = Classes.Where(cs => cs.User.Name.Contains(Search) || cs.Class.Name.Contains(Search));
+                    return View(await Classes.ToListAsync());
+                }
+                var applicationContext = _context.ClassRegister.Include(c => c.Class).Include(c => c.User);
+                return View(await applicationContext.ToListAsync());
             }
-            var applicationContext = _context.ClassRegister.Include(c => c.Class).Include(c => c.User);
-            return View(await applicationContext.ToListAsync());
         }
-
+        [Authorize(Roles ="Staff")]
         // GET: ClassRegisters/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -51,21 +65,21 @@ namespace Revolutionary.Controllers
 
             return View(classRegister);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: ClassRegisters/Create
         public IActionResult Create()
         {
-            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name");
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Code");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class");
             return View();
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: ClassRegisters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,ClassId")] ClassRegister classRegister)
+        public async Task<IActionResult> Create([Bind("Id,UserId,ClassId")] ClassRegister classRegister)
         {
             if (ModelState.IsValid)
             {
@@ -73,11 +87,11 @@ namespace Revolutionary.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id", classRegister.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Code", classRegister.ClassId);
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
             return View(classRegister);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: ClassRegisters/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -91,11 +105,11 @@ namespace Revolutionary.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name", classRegister.UserId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", classRegister.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Code", classRegister.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
             return View(classRegister);
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: ClassRegisters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -128,11 +142,11 @@ namespace Revolutionary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name", classRegister.UserId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", classRegister.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Code", classRegister.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
             return View(classRegister);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: ClassRegisters/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -152,7 +166,7 @@ namespace Revolutionary.Controllers
 
             return View(classRegister);
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: ClassRegisters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -167,6 +181,16 @@ namespace Revolutionary.Controllers
         private bool ClassRegisterExists(int id)
         {
             return _context.ClassRegister.Any(e => e.Id == id);
+        }
+
+        private async Task<Revolutionary.Areas.Identity.Data.Models.User> GetCurrentUserAsync()
+        {
+            return await _userManager.GetUserAsync(HttpContext.User);
+        }
+        private async Task<string> GetCurrentUserRoleAsync()
+        {
+            var roles = await _userManager.GetRolesAsync(await GetCurrentUserAsync());
+            return roles.First();
         }
     }
 }

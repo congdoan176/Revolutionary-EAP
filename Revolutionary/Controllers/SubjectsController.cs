@@ -20,7 +20,7 @@ namespace Revolutionary.Controllers
         {
             _context = context;
         }
-        [Authorize(Roles = "Student")]
+        
         // GET: Subjects
         public async Task<IActionResult> Index(string Search)
         {

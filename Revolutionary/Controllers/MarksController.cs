@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,34 +12,41 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
-    [Authorize(Roles = "Staff")]
+    [Authorize]
     public class MarksController : Controller
     {
         private readonly ApplicationContext _context;
+        private readonly UserManager<Revolutionary.Areas.Identity.Data.Models.User> _userManager;
 
-        public MarksController(ApplicationContext context)
+        public MarksController(ApplicationContext context, UserManager<Revolutionary.Areas.Identity.Data.Models.User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-        [Authorize(Roles = "Student")]
+        
         // GET: Marks
-        public async Task<IActionResult> Index(string Search, float? Filter) // filter: 
+        public async Task<IActionResult> Index(string Search)
         {
-            if (!String.IsNullOrEmpty(Search) && Filter == null)
+            if (String.Equals("Student", await GetCurrentUserRoleAsync()))
             {
+                var user = await GetCurrentUserAsync();
                 var Marks = from c in _context.Mark select c;
-                Marks = Marks.Where(cs => cs.User.Name.Contains(Search) || cs.User.Class.Contains(Search) || cs.User.StudentCode.Contains(Search));
-                return View(await Marks.ToListAsync());
-            } else if (String.IsNullOrEmpty(Search) && Filter != null)
-            {
-                var Marks = from c in _context.Mark select c;
-                Marks = Marks.Where(cs => cs.Theory == Filter || cs.Practical == Filter || cs.Assignment == Filter);
+                Marks = Marks.Where(cs => cs.UserId == user.Id);
                 return View(await Marks.ToListAsync());
             }
-            var applicationContext = _context.Mark.Include(m => m.Class).Include(m => m.User);
-            return View(await applicationContext.ToListAsync());
+            else
+            {
+                if (!String.IsNullOrEmpty(Search))
+                {
+                    var Marks = from c in _context.Mark select c;
+                    Marks = Marks.Where(cs => cs.User.Name.Contains(Search) || cs.User.Class.Contains(Search) || cs.User.StudentCode.Contains(Search));
+                    return View(await Marks.ToListAsync());
+                }
+                var applicationContext = _context.Mark.Include(m => m.Class).Include(m => m.User);
+                return View(await applicationContext.ToListAsync());
+            }
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Marks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -58,7 +66,7 @@ namespace Revolutionary.Controllers
 
             return View(mark);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Marks/Create
         public IActionResult Create()
         {
@@ -66,7 +74,7 @@ namespace Revolutionary.Controllers
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Name");
             return View();
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: Marks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -84,7 +92,7 @@ namespace Revolutionary.Controllers
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", mark.UserId);
             return View(mark);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Marks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -102,7 +110,7 @@ namespace Revolutionary.Controllers
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", mark.UserId);
             return View(mark);
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: Marks/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -139,7 +147,7 @@ namespace Revolutionary.Controllers
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", mark.UserId);
             return View(mark);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Marks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -159,7 +167,7 @@ namespace Revolutionary.Controllers
 
             return View(mark);
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: Marks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -174,6 +182,15 @@ namespace Revolutionary.Controllers
         private bool MarkExists(int id)
         {
             return _context.Mark.Any(e => e.Id == id);
+        }
+        private async Task<Revolutionary.Areas.Identity.Data.Models.User> GetCurrentUserAsync()
+        {
+            return await _userManager.GetUserAsync(HttpContext.User);
+        }
+        private async Task<string> GetCurrentUserRoleAsync()
+        {
+            var roles = await _userManager.GetRolesAsync(await GetCurrentUserAsync());
+            return roles.First();
         }
     }
 }

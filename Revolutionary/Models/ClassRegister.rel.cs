@@ -10,13 +10,15 @@ namespace Revolutionary.Models
     public class ClassRegister
     {
         [Key]
-        public int Id { get; set; }
         // this is a relationship model
+        public int Id { get; set; }
+        [Required]
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
+        [Required]
         public int ClassId { get; set; }
-        [ForeignKey("UserId")]
+        [ForeignKey("ClassId")]
         public Class Class { get; set; }
     }
 }

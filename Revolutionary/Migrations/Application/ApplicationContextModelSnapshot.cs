@@ -64,6 +64,8 @@ namespace Revolutionary.Migrations.Application
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClassId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("ClassRegister");
@@ -95,19 +97,19 @@ namespace Revolutionary.Migrations.Application
                         {
                             Id = 1,
                             Code = "AAAAAA",
-                            CreatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 205, DateTimeKind.Local).AddTicks(4474),
+                            CreatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 172, DateTimeKind.Local).AddTicks(9628),
                             RoleId = 1,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(1863)
+                            UpdatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(3289)
                         },
                         new
                         {
                             Id = 2,
                             Code = "BBBBBB",
-                            CreatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(5333),
+                            CreatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(5673),
                             RoleId = 0,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(5339)
+                            UpdatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(5679)
                         });
                 });
 
@@ -205,12 +207,12 @@ namespace Revolutionary.Migrations.Application
             modelBuilder.Entity("Revolutionary.Models.ClassRegister", b =>
                 {
                     b.HasOne("Revolutionary.Models.Class", "Class")
-                        .WithMany("ClassRegisters")
-                        .HasForeignKey("UserId")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Revolutionary.Models.User", "User")
-                        .WithMany("ClassRegisters")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -223,7 +225,7 @@ namespace Revolutionary.Migrations.Application
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Revolutionary.Models.User", "User")
-                        .WithMany("Marks")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

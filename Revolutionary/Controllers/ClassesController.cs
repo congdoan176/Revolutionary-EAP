@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,29 +12,40 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
-    [Authorize(Roles ="Staff")]
+    [Authorize]
     public class ClassesController : Controller
     {
         private readonly ApplicationContext _context;
+        private readonly UserManager<Revolutionary.Areas.Identity.Data.Models.User> _userManager;
 
-        public ClassesController(ApplicationContext context)
+        public ClassesController(ApplicationContext context, UserManager<Revolutionary.Areas.Identity.Data.Models.User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-        [Authorize(Roles = "Student")]
+        
         // GET: Classes
         // optional: Classes?Search=
         public async Task<IActionResult> Index(string Search)
         {
-            if (!String.IsNullOrEmpty(Search)) {
+            if (String.Equals("Student", await GetCurrentUserRoleAsync()))
+            {
                 var Classes = from c in _context.Class select c;
-                Classes = Classes.Where(cs => cs.Name.Contains(Search) || cs.Subject.Name.Contains(Search));
+                Classes = Classes.Where(cs => cs.StartDate <= DateTime.Now && cs.EndDate >= DateTime.Now);
                 return View(await Classes.ToListAsync());
             }
-            return View(await _context.Class.Include(c => c.Subject).ToListAsync());
-
+            else
+            {
+                if (!String.IsNullOrEmpty(Search))
+                {
+                    var Classes = from c in _context.Class select c;
+                    Classes = Classes.Where(cs => cs.Name.Contains(Search) || cs.Subject.Name.Contains(Search));
+                    return View(await Classes.ToListAsync());
+                }
+                return View(await _context.Class.Include(c => c.Subject).ToListAsync());
+            }
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Classes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -52,14 +64,14 @@ namespace Revolutionary.Controllers
 
             return View(@class);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Classes/Create
         public IActionResult Create()
         {
             ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name");
             return View();
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: Classes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -76,7 +88,20 @@ namespace Revolutionary.Controllers
             ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name", @class.SubjectId);
             return View(@class);
         }
-
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> Register(int id)
+        {
+            var user = await GetCurrentUserAsync();
+            ClassRegister classRegister = new ClassRegister()
+            {
+                UserId = user.Id,
+                ClassId = id
+            };
+            _context.ClassRegister.Add(classRegister);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        [Authorize(Roles = "Staff")]
         // GET: Classes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -93,7 +118,7 @@ namespace Revolutionary.Controllers
             ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name", @class.SubjectId);
             return View(@class);
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: Classes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -129,7 +154,7 @@ namespace Revolutionary.Controllers
             ViewData["SubjectId"] = new SelectList(_context.Subject, "Id", "Name", @class.SubjectId);
             return View(@class);
         }
-
+        [Authorize(Roles = "Staff")]
         // GET: Classes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -148,7 +173,7 @@ namespace Revolutionary.Controllers
 
             return View(@class);
         }
-
+        [Authorize(Roles = "Staff")]
         // POST: Classes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -163,6 +188,16 @@ namespace Revolutionary.Controllers
         private bool ClassExists(int id)
         {
             return _context.Class.Any(e => e.Id == id);
+        }
+
+        private async Task<Revolutionary.Areas.Identity.Data.Models.User> GetCurrentUserAsync()
+        {
+            return await _userManager.GetUserAsync(HttpContext.User);
+        }
+        private async Task<string> GetCurrentUserRoleAsync()
+        {
+            var roles = await _userManager.GetRolesAsync(await GetCurrentUserAsync());
+            return roles.First();
         }
     }
 }

@@ -24,12 +24,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.RoleId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
             @if (User.IsInRole("Staff"))
             {
             <th></th>
@@ -47,12 +41,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoleId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
             </td>
             @if (User.IsInRole("Staff"))
             {

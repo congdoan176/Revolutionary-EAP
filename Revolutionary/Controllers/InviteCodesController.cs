@@ -11,6 +11,7 @@ using Revolutionary.Models;
 
 namespace Revolutionary.Controllers
 {
+    [Authorize(Roles ="Staff")]
     public class InviteCodesController : Controller
     {
         private readonly ApplicationContext _context;

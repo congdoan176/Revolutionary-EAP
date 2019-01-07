@@ -100,8 +100,8 @@ namespace Revolutionary.Migrations.Application
                 {
                     table.PrimaryKey("PK_ClassRegister", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClassRegister_Class_UserId",
-                        column: x => x.UserId,
+                        name: "FK_ClassRegister_Class_ClassId",
+                        column: x => x.ClassId,
                         principalTable: "Class",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -149,17 +149,22 @@ namespace Revolutionary.Migrations.Application
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 7, 16, 51, 1, 205, DateTimeKind.Local).AddTicks(4474), 1, 1, new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(1863) });
+                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 8, 4, 10, 52, 172, DateTimeKind.Local).AddTicks(9628), 1, 1, new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(3289) });
 
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(5333), 0, 1, new DateTime(2019, 1, 7, 16, 51, 1, 207, DateTimeKind.Local).AddTicks(5339) });
+                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(5673), 0, 1, new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(5679) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_SubjectId",
                 table: "Class",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassRegister_ClassId",
+                table: "ClassRegister",
+                column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClassRegister_UserId",

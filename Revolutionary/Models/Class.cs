@@ -28,7 +28,6 @@ namespace Revolutionary.Models
         public string Name { get; set; }
         [Required]
         public string Code { get; set; }
-        public ICollection<ClassRegister> ClassRegisters { get; set; }
         [Required(ErrorMessage = "Please input the current subject of the class")]
         public int SubjectId { get; set; }
         [Required(ErrorMessage = "Please input class start date")]

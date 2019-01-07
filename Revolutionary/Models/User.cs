@@ -22,14 +22,14 @@ namespace Revolutionary.Models
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        public ICollection<ClassRegister> ClassRegisters { get; set; }
-        public ICollection<Mark> Marks { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public string Class { get; set; }
+        [Required]
+        public List<Mark> Marks { get; set; }
         [Required]
         public string StudentCode { get; set; }
         [Required]
