@@ -10,7 +10,7 @@ using Revolutionary.Data;
 namespace Revolutionary.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190107082823_CreateDatabaseSchema")]
+    [Migration("20190107084125_CreateDatabaseSchema")]
     partial class CreateDatabaseSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,19 +91,19 @@ namespace Revolutionary.Migrations.Application
                         {
                             Id = 1,
                             Code = "AAAAAA",
-                            CreatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 955, DateTimeKind.Local).AddTicks(1189),
+                            CreatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 691, DateTimeKind.Local).AddTicks(5726),
                             RoleId = 1,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(4316)
+                            UpdatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 692, DateTimeKind.Local).AddTicks(8562)
                         },
                         new
                         {
                             Id = 2,
                             Code = "BBBBBB",
-                            CreatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7614),
+                            CreatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 693, DateTimeKind.Local).AddTicks(963),
                             RoleId = 0,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7620)
+                            UpdatedAt = new DateTime(2019, 1, 7, 15, 41, 24, 693, DateTimeKind.Local).AddTicks(969)
                         });
                 });
 
@@ -177,7 +177,7 @@ namespace Revolutionary.Migrations.Application
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("PhọneNumber")
+                    b.Property<string>("PhoneNumber")
                         .IsRequired();
 
                     b.Property<string>("StudentCode")

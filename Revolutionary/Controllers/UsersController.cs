@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,13 @@ namespace Revolutionary.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly UserManager<Revolutionary.Areas.Identity.Data.Models.User> _userManager;
         private readonly ApplicationContext _context;
 
-        public UsersController(ApplicationContext context)
+        public UsersController(ApplicationContext context, UserManager<Revolutionary.Areas.Identity.Data.Models.User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Users
@@ -58,6 +61,7 @@ namespace Revolutionary.Controllers
         {
             if (ModelState.IsValid)
             {
+                await _userManager.CreateAsync(Construct(user));
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,6 +101,7 @@ namespace Revolutionary.Controllers
             {
                 try
                 {
+                    await _userManager.UpdateAsync(Construct(user));
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -140,6 +145,7 @@ namespace Revolutionary.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await _context.User.FindAsync(id);
+            await _userManager.DeleteAsync(Construct(user));
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -148,6 +154,19 @@ namespace Revolutionary.Controllers
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+
+        public Revolutionary.Areas.Identity.Data.Models.User Construct(User user)
+        {
+            return new Revolutionary.Areas.Identity.Data.Models.User()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                StudentCode = user.StudentCode,
+                Class = user.Class,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            };
         }
     }
 }

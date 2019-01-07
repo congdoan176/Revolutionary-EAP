@@ -44,7 +44,7 @@ namespace Revolutionary.Services
                 _context.User.Remove(u);
                 await _context.SaveChangesAsync();
             }
-            public Revolutionary.Models.User Construct(User user)
+            private Revolutionary.Models.User Construct(User user)
             {
                 return new Revolutionary.Models.User()
                 {
@@ -53,7 +53,7 @@ namespace Revolutionary.Services
                     StudentCode = user.StudentCode,
                     Class = user.Class,
                     Email = user.Email,
-                    PhọneNumber = user.PhoneNumber
+                    PhoneNumber = user.PhoneNumber
                 };
             }
         }

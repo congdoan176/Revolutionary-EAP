@@ -33,6 +33,8 @@
     <Compile Remove="Migrations\Application\20190105195324_CreateApplicationSchema.Designer.cs" />
     <Compile Remove="Migrations\Application\20190106130827_CreateBaseContext.cs" />
     <Compile Remove="Migrations\Application\20190106130827_CreateBaseContext.Designer.cs" />
+    <Compile Remove="Migrations\Application\20190107082823_CreateDatabaseSchema.cs" />
+    <Compile Remove="Migrations\Application\20190107082823_CreateDatabaseSchema.Designer.cs" />
     <Compile Remove="Migrations\Authentication\20190106141434_CreateIdentityContext.cs" />
     <Compile Remove="Migrations\Authentication\20190106141434_CreateIdentityContext.Designer.cs" />
   </ItemGroup>

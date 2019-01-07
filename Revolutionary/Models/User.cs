@@ -33,7 +33,7 @@ namespace Revolutionary.Models
         [Required]
         public string StudentCode { get; set; }
         [Required]
-        public string PhọneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

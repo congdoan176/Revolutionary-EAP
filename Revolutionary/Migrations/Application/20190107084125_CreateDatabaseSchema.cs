@@ -51,7 +51,7 @@ namespace Revolutionary.Migrations.Application
                     Name = table.Column<string>(nullable: false),
                     Class = table.Column<string>(nullable: false),
                     StudentCode = table.Column<string>(nullable: false),
-                    PhọneNumber = table.Column<string>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
@@ -147,12 +147,12 @@ namespace Revolutionary.Migrations.Application
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 7, 15, 28, 22, 955, DateTimeKind.Local).AddTicks(1189), 1, 1, new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(4316) });
+                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 7, 15, 41, 24, 691, DateTimeKind.Local).AddTicks(5726), 1, 1, new DateTime(2019, 1, 7, 15, 41, 24, 692, DateTimeKind.Local).AddTicks(8562) });
 
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7614), 0, 1, new DateTime(2019, 1, 7, 15, 28, 22, 956, DateTimeKind.Local).AddTicks(7620) });
+                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 7, 15, 41, 24, 693, DateTimeKind.Local).AddTicks(963), 0, 1, new DateTime(2019, 1, 7, 15, 41, 24, 693, DateTimeKind.Local).AddTicks(969) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_SubjectId",
