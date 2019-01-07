@@ -21,8 +21,19 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Marks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string Search, float? Filter) // filter: 
         {
+            if (!String.IsNullOrEmpty(Search) && Filter == null)
+            {
+                var Marks = from c in _context.Mark select c;
+                Marks = Marks.Where(cs => cs.User.Name.Contains(Search) || cs.User.Class.Contains(Search) || cs.User.StudentCode.Contains(Search));
+                return View(await Marks.ToListAsync());
+            } else if (String.IsNullOrEmpty(Search) && Filter != null)
+            {
+                var Marks = from c in _context.Mark select c;
+                Marks = Marks.Where(cs => cs.Theory == Filter || cs.Practical == Filter || cs.Assignment == Filter);
+                return View(await Marks.ToListAsync());
+            }
             var applicationContext = _context.Mark.Include(m => m.Class).Include(m => m.User);
             return View(await applicationContext.ToListAsync());
         }

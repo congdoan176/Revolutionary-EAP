@@ -20,10 +20,16 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Classes
-        public async Task<IActionResult> Index()
+        // optional: Classes?Search=
+        public async Task<IActionResult> Index(string Search)
         {
-            var applicationContext = _context.Class.Include(c => c.Subject);
-            return View(await applicationContext.ToListAsync());
+            if (!String.IsNullOrEmpty(Search)) {
+                var Classes = from c in _context.Class select c;
+                Classes = Classes.Where(cs => cs.Name.Contains(Search) || cs.Subject.Name.Contains(Search));
+                return View(await Classes.ToListAsync());
+            }
+            return View(await _context.Class.Include(c => c.Subject).ToListAsync());
+
         }
 
         // GET: Classes/Details/5

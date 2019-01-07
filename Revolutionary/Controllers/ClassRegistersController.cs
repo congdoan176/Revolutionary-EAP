@@ -20,8 +20,14 @@ namespace Revolutionary.Controllers
         }
 
         // GET: ClassRegisters
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(String Search)
         {
+            if (!String.IsNullOrEmpty(Search))
+            {
+                var Registers = from c in _context.ClassRegister select c;
+                Registers = Registers.Where(cs => cs.User.Name.Contains(Search) || cs.User.StudentCode.Contains(Search) || cs.User.Class.Contains(Search) || cs.Class.Name.Contains(Search) || cs.Class.Subject.Name.Contains(Search));
+                return View(await Registers.ToListAsync());
+            }
             var applicationContext = _context.ClassRegister.Include(c => c.Class).Include(c => c.User);
             return View(await applicationContext.ToListAsync());
         }

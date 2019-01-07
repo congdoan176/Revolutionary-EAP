@@ -22,8 +22,14 @@ namespace Revolutionary.Controllers
         }
 
         // GET: Subjects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string Search)
         {
+            if (!String.IsNullOrEmpty(Search))
+            {
+                var Subjects = from c in _context.Subject select c;
+                Subjects = Subjects.Where(cs => cs.Name.Contains(Search));
+                return View(await Subjects.ToListAsync());
+            }
             return View(await _context.Subject.ToListAsync());
         }
 
