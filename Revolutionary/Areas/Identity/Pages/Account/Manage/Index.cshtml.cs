@@ -84,6 +84,7 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                Name = user.Name,
                 Email = user.Email,
                 StudentCode = user.StudentCode,
                 Class = user.Class,

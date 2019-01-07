@@ -55,8 +55,8 @@ namespace Revolutionary.Controllers
         // GET: ClassRegisters/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class");
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,ClassId")] ClassRegister classRegister)
+        public async Task<IActionResult> Create([Bind("UserId,ClassId")] ClassRegister classRegister)
         {
             if (ModelState.IsValid)
             {
@@ -91,8 +91,8 @@ namespace Revolutionary.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id", classRegister.UserId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name", classRegister.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", classRegister.UserId);
             return View(classRegister);
         }
 
@@ -128,8 +128,8 @@ namespace Revolutionary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Class, "Id", "Id", classRegister.UserId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name", classRegister.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", classRegister.UserId);
             return View(classRegister);
         }
 

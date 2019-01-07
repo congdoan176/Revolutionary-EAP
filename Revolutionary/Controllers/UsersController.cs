@@ -64,12 +64,12 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Name,Class,StudentCode,PhọneNumber,CreatedAt,UpdatedAt")] User user)
+        public async Task<IActionResult> Create([Bind("Email,Name,Class,StudentCode,PhoneNumber")] User user)
         {
             if (ModelState.IsValid)
             {
                 var u = Construct(user);
-                var result = await _userManager.CreateAsync(u, "FPT@Student");
+                var result = await _userManager.CreateAsync(u, "FPT@Student123");
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(u, "Student");
@@ -102,7 +102,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Name,Class,StudentCode,PhọneNumber,CreatedAt,UpdatedAt")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Name,Class,StudentCode,PhoneNumber")] User user)
         {
             if (id != user.Id)
             {

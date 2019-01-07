@@ -62,7 +62,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Status,CreatedAt,UpdatedAt")] Subject subject)
+        public async Task<IActionResult> Create([Bind("Name,Description,Status")] Subject subject)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status,CreatedAt,UpdatedAt")] Subject subject)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status")] Subject subject)
         {
             if (id != subject.Id)
             {

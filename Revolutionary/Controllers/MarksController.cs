@@ -61,8 +61,8 @@ namespace Revolutionary.Controllers
         // GET: Marks/Create
         public IActionResult Create()
         {
-            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class");
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name");
             return View();
         }
 
@@ -71,7 +71,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,ClassId,Theory,Practical,Assignment,Penalty,CreatedAt,UpdatedAt,Status")] Mark mark)
+        public async Task<IActionResult> Create([Bind("UserId,ClassId,Theory,Practical,Assignment,Penalty")] Mark mark)
         {
             if (ModelState.IsValid)
             {
@@ -79,8 +79,8 @@ namespace Revolutionary.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id", mark.ClassId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", mark.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name", mark.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", mark.UserId);
             return View(mark);
         }
 
@@ -97,8 +97,8 @@ namespace Revolutionary.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id", mark.ClassId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", mark.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name", mark.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", mark.UserId);
             return View(mark);
         }
 
@@ -107,7 +107,7 @@ namespace Revolutionary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ClassId,Theory,Practical,Assignment,Penalty,CreatedAt,UpdatedAt,Status")] Mark mark)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ClassId,Theory,Practical,Assignment,Penalty")] Mark mark)
         {
             if (id != mark.Id)
             {
@@ -134,8 +134,8 @@ namespace Revolutionary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Id", mark.ClassId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", mark.UserId);
+            ViewData["ClassId"] = new SelectList(_context.Class, "Id", "Name", mark.ClassId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Name", mark.UserId);
             return View(mark);
         }
 

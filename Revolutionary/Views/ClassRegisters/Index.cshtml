@@ -4,14 +4,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List Class Registers</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole("Staff"))
+    {
+        <a asp-action="Create">Create New</a>
+    }
+    else
+    {
+        <a asp-action="Create">Register Class</a>
+    }
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
@@ -27,6 +37,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Class)
             </td>
