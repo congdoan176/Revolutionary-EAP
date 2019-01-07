@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -61,7 +62,12 @@ namespace Revolutionary.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _userManager.CreateAsync(Construct(user), "iloveyou");
+                var u = Construct(user);
+                var result = await _userManager.CreateAsync(u, "FPT@Student");
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(u, "Student");
+                }
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
