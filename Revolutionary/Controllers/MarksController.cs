@@ -27,10 +27,10 @@ namespace Revolutionary.Controllers
         // GET: Marks
         public async Task<IActionResult> Index(string Search)
         {
-            if (String.Equals("Student", await GetCurrentUserRoleAsync()))
+            if (User.IsInRole("Student"))
             {
                 var user = await GetCurrentUserAsync();
-                var Marks = from c in _context.Mark select c;
+                var Marks = from c in _context.Mark.Include(m => m.Class).Include(m => m.User) select c;
                 Marks = Marks.Where(cs => cs.UserId == user.Id);
                 return View(await Marks.ToListAsync());
             }
@@ -186,11 +186,6 @@ namespace Revolutionary.Controllers
         private async Task<Revolutionary.Areas.Identity.Data.Models.User> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(HttpContext.User);
-        }
-        private async Task<string> GetCurrentUserRoleAsync()
-        {
-            var roles = await _userManager.GetRolesAsync(await GetCurrentUserAsync());
-            return roles.First();
         }
     }
 }

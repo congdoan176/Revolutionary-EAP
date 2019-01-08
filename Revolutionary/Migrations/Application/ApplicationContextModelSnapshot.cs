@@ -97,19 +97,19 @@ namespace Revolutionary.Migrations.Application
                         {
                             Id = 1,
                             Code = "AAAAAA",
-                            CreatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 172, DateTimeKind.Local).AddTicks(9628),
+                            CreatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 925, DateTimeKind.Local).AddTicks(9040),
                             RoleId = 1,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(3289)
+                            UpdatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(4446)
                         },
                         new
                         {
                             Id = 2,
                             Code = "BBBBBB",
-                            CreatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(5673),
+                            CreatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(7148),
                             RoleId = 0,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 8, 4, 10, 52, 174, DateTimeKind.Local).AddTicks(5679)
+                            UpdatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(7154)
                         });
                 });
 
@@ -225,7 +225,7 @@ namespace Revolutionary.Migrations.Application
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Revolutionary.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Marks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -45,11 +45,6 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [Display(Name = "ID")]
-            public string Email { get; set; }
-
-            
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -85,7 +80,6 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Name = user.Name,
-                Email = user.Email,
                 StudentCode = user.StudentCode,
                 Class = user.Class,
                 PhoneNumber = user.PhoneNumber
@@ -104,7 +98,8 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -115,12 +110,16 @@ namespace Revolutionary.Areas.Identity.Pages.Account.Manage
             if (Input.Name != null) user.Name = Input.Name;
             if (Input.PhoneNumber != null) user.PhoneNumber = Input.PhoneNumber;
             
-            await _userManager.UpdateAsync(user);
-            await _exService.Edit(user);
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                await _exService.Edit(user);
 
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
-            return RedirectToPage();
+                await _signInManager.RefreshSignInAsync(user);
+                StatusMessage = "Your profile has been updated";
+                return RedirectToPage();
+            }
+            else return BadRequest();
         }
 
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()

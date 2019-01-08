@@ -27,10 +27,10 @@ namespace Revolutionary.Controllers
         // GET: ClassRegisters
         public async Task<IActionResult> Index(String Search)
         {
-            if (String.Equals("Student", await GetCurrentUserRoleAsync()))
+            if (User.IsInRole("Student"))
             {
                 var user = await GetCurrentUserAsync();
-                var Classes = from c in _context.ClassRegister select c;
+                var Classes = from c in _context.ClassRegister.Include(c => c.Class).Include(c => c.User) select c;
                 Classes = Classes.Where(cs => cs.UserId == user.Id);
                 return View(await Classes.ToListAsync());
             } else
@@ -146,7 +146,7 @@ namespace Revolutionary.Controllers
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Class", classRegister.UserId);
             return View(classRegister);
         }
-        [Authorize(Roles = "Staff")]
+        
         // GET: ClassRegisters/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -166,12 +166,17 @@ namespace Revolutionary.Controllers
 
             return View(classRegister);
         }
-        [Authorize(Roles = "Staff")]
+        
         // POST: ClassRegisters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (User.IsInRole("Student"))
+            {
+                var user = await GetCurrentUserAsync();
+                if (!await _context.ClassRegister.AnyAsync(c => c.UserId == user.Id && c.ClassId == id)) return BadRequest();
+            }
             var classRegister = await _context.ClassRegister.FindAsync(id);
             _context.ClassRegister.Remove(classRegister);
             await _context.SaveChangesAsync();
@@ -186,11 +191,6 @@ namespace Revolutionary.Controllers
         private async Task<Revolutionary.Areas.Identity.Data.Models.User> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(HttpContext.User);
-        }
-        private async Task<string> GetCurrentUserRoleAsync()
-        {
-            var roles = await _userManager.GetRolesAsync(await GetCurrentUserAsync());
-            return roles.First();
         }
     }
 }

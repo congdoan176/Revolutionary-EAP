@@ -15,34 +15,67 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Class)
-            </th>
             @if (User.IsInRole("Staff"))
             {
-                <th></th>
-
-            }</tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+            }
+                <th>
+                    @Html.DisplayNameFor(model => model.Class)
+                </th>
+                <th>
+                    Session
+                </th>
+                <th>
+                    StartDate
+                </th>
+                <th>
+                    EndDate
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>Action</th>
+            </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Class)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.Code)
-            </td>
             @if (User.IsInRole("Staff"))
             {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @Html.DisplayFor(modelItem => item.User.Name)
                 </td>
+            }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Session)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Status)
+                </td>
+                @if (User.IsInRole("Staff"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
                 }
             </tr>
 }

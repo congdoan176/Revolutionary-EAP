@@ -15,66 +15,76 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Theory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Practical)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Assignment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Penalty)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Class)
-            </th>
             @if (User.IsInRole("Staff"))
             {
-                <th>Action</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class)
+                </th>
             }
+                <th>
+                    @Html.DisplayNameFor(model => model.Class)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Theory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Practical)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Assignment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Penalty)
+                </th>
+                <th>
+                    Total
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                @if (User.IsInRole("Staff"))
+                {
+                    <th>Action</th>
+                }
             </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Theory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Practical)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Assignment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Penalty)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Class)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.Id)
-            </td>
             @if (User.IsInRole("Staff"))
             {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @Html.DisplayFor(modelItem => item.User.Name)
                 </td>
+            }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Theory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Practical)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assignment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Penalty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assignment + item.Theory + item.Practical - item.Penalty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                @if (User.IsInRole("Staff"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
                 }
             </tr>
 }

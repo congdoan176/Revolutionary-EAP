@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Revolutionary.Data;
 using Revolutionary.Models;
 
@@ -17,6 +19,7 @@ namespace Revolutionary.Controllers
     {
         private readonly ApplicationContext _context;
         private readonly UserManager<Revolutionary.Areas.Identity.Data.Models.User> _userManager;
+        private static object locker = new object();
 
         public ClassesController(ApplicationContext context, UserManager<Revolutionary.Areas.Identity.Data.Models.User> userManager)
         {
@@ -28,17 +31,30 @@ namespace Revolutionary.Controllers
         // optional: Classes?Search=
         public async Task<IActionResult> Index(string Search)
         {
-            if (String.Equals("Student", await GetCurrentUserRoleAsync()))
+            if (User.IsInRole("Student"))
             {
-                var Classes = from c in _context.Class select c;
+                var user = await GetCurrentUserAsync();
+                var Classes = from c in _context.Class.Include(c => c.Subject) select c;
                 Classes = Classes.Where(cs => cs.StartDate <= DateTime.Now && cs.EndDate >= DateTime.Now);
-                return View(await Classes.ToListAsync());
+                var ListClasses = await Classes.ToListAsync();
+                if (ListClasses.Count > 0)
+                {
+
+                    for (int i = 0; i < ListClasses.Count; i++) {
+                        if (await _context.ClassRegister.AnyAsync(cr => cr.ClassId == ListClasses.ElementAt(i).Id && cr.UserId == user.Id))
+                        {
+                            ListClasses.RemoveAt(i);
+                            if (i == ListClasses.Count - 1) ListClasses.Clear();
+                        }
+                    }
+                }
+                return View(ListClasses);
             }
             else
             {
                 if (!String.IsNullOrEmpty(Search))
                 {
-                    var Classes = from c in _context.Class select c;
+                    var Classes = from c in _context.Class.Include(c => c.Subject) select c;
                     Classes = Classes.Where(cs => cs.Name.Contains(Search) || cs.Subject.Name.Contains(Search));
                     return View(await Classes.ToListAsync());
                 }
@@ -92,6 +108,10 @@ namespace Revolutionary.Controllers
         public async Task<IActionResult> Register(int id)
         {
             var user = await GetCurrentUserAsync();
+            if (await _context.ClassRegister.AnyAsync(c => c.UserId == user.Id && c.ClassId == id))
+            {
+                return Redirect("/ClassRegisters");
+            }
             ClassRegister classRegister = new ClassRegister()
             {
                 UserId = user.Id,
@@ -193,11 +213,6 @@ namespace Revolutionary.Controllers
         private async Task<Revolutionary.Areas.Identity.Data.Models.User> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(HttpContext.User);
-        }
-        private async Task<string> GetCurrentUserRoleAsync()
-        {
-            var roles = await _userManager.GetRolesAsync(await GetCurrentUserAsync());
-            return roles.First();
         }
     }
 }

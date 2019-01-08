@@ -16,12 +16,14 @@ namespace Revolutionary.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<Revolutionary.Areas.Identity.Data.Models.User> _userManager;
+        private readonly SignInManager<Revolutionary.Areas.Identity.Data.Models.User> _signInManager;
         private readonly ApplicationContext _context;
 
-        public UsersController(ApplicationContext context, UserManager<Revolutionary.Areas.Identity.Data.Models.User> userManager)
+        public UsersController(ApplicationContext context, UserManager<Revolutionary.Areas.Identity.Data.Models.User> userManager, SignInManager<Revolutionary.Areas.Identity.Data.Models.User> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
         
         // GET: Users
@@ -110,13 +112,21 @@ namespace Revolutionary.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
+            try
                 {
-                    await _userManager.UpdateAsync(Construct(user));
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    var u = await _userManager.FindByIdAsync(user.Id.ToString());
+                    u.Email = user.Email;
+                    u.Name = user.Name;
+                    u.Class = user.Class;
+                    u.StudentCode = user.StudentCode;
+                    u.PhoneNumber = user.PhoneNumber;
+                    var result = await _userManager.UpdateAsync(u);
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.RefreshSignInAsync(u);
+                        _context.User.Update(user);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -130,8 +140,6 @@ namespace Revolutionary.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            return View(user);
         }
 
         // GET: Users/Delete/5
