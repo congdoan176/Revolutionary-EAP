@@ -10,7 +10,7 @@ using Revolutionary.Data;
 namespace Revolutionary.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190108052956_CreateDatabaseSchema")]
+    [Migration("20190108060853_CreateDatabaseSchema")]
     partial class CreateDatabaseSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,19 +99,19 @@ namespace Revolutionary.Migrations.Application
                         {
                             Id = 1,
                             Code = "AAAAAA",
-                            CreatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 925, DateTimeKind.Local).AddTicks(9040),
+                            CreatedAt = new DateTime(2019, 1, 8, 13, 8, 53, 204, DateTimeKind.Local).AddTicks(466),
                             RoleId = 1,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(4446)
+                            UpdatedAt = new DateTime(2019, 1, 8, 13, 8, 53, 205, DateTimeKind.Local).AddTicks(4497)
                         },
                         new
                         {
                             Id = 2,
                             Code = "BBBBBB",
-                            CreatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(7148),
+                            CreatedAt = new DateTime(2019, 1, 8, 13, 8, 53, 205, DateTimeKind.Local).AddTicks(6964),
                             RoleId = 0,
                             Status = 1,
-                            UpdatedAt = new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(7154)
+                            UpdatedAt = new DateTime(2019, 1, 8, 13, 8, 53, 205, DateTimeKind.Local).AddTicks(6967)
                         });
                 });
 

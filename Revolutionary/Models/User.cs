@@ -28,7 +28,6 @@ namespace Revolutionary.Models
         public string Name { get; set; }
         [Required]
         public string Class { get; set; }
-        [Required]
         public List<Mark> Marks { get; set; }
         [Required]
         public string StudentCode { get; set; }

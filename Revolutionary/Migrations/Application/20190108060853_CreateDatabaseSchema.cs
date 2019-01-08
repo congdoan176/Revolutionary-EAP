@@ -149,12 +149,12 @@ namespace Revolutionary.Migrations.Application
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 8, 12, 29, 55, 925, DateTimeKind.Local).AddTicks(9040), 1, 1, new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(4446) });
+                values: new object[] { 1, "AAAAAA", new DateTime(2019, 1, 8, 13, 8, 53, 204, DateTimeKind.Local).AddTicks(466), 1, 1, new DateTime(2019, 1, 8, 13, 8, 53, 205, DateTimeKind.Local).AddTicks(4497) });
 
             migrationBuilder.InsertData(
                 table: "InviteCode",
                 columns: new[] { "Id", "Code", "CreatedAt", "RoleId", "Status", "UpdatedAt" },
-                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(7148), 0, 1, new DateTime(2019, 1, 8, 12, 29, 55, 927, DateTimeKind.Local).AddTicks(7154) });
+                values: new object[] { 2, "BBBBBB", new DateTime(2019, 1, 8, 13, 8, 53, 205, DateTimeKind.Local).AddTicks(6964), 0, 1, new DateTime(2019, 1, 8, 13, 8, 53, 205, DateTimeKind.Local).AddTicks(6967) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_SubjectId",

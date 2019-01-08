@@ -72,14 +72,15 @@ namespace Revolutionary.Controllers
             if (ModelState.IsValid)
             {
                 var u = Construct(user);
-                var result = await _userManager.CreateAsync(u, "FPT@Student123");
+                var result = await _userManager.CreateAsync(u, "Student@123");
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(u, "Student");
+                    user.Id = u.Id;
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
             return View(user);
         }
@@ -177,7 +178,7 @@ namespace Revolutionary.Controllers
             return _context.User.Any(e => e.Id == id);
         }
 
-        public Revolutionary.Areas.Identity.Data.Models.User Construct(User user)
+        private Revolutionary.Areas.Identity.Data.Models.User Construct(User user)
         {
             return new Revolutionary.Areas.Identity.Data.Models.User()
             {
