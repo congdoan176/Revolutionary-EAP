@@ -30,6 +30,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
+                    <form method="get">
+                        <input type="text" name="Search"  />
+                        <input type="submit"  value="Search" />
+                    </form>
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.IsInRole("Staff"))
                         {
